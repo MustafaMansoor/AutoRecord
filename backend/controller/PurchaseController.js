@@ -44,8 +44,10 @@ const updatePurchase = async (req, res) => {
     const purchaseId = req.params.id;
     const {
       status,
+      invoiceNumber,
       date,
       supplierName,
+      supplierAccount,
       category,
       vatCode,
       currency,
@@ -62,8 +64,11 @@ const updatePurchase = async (req, res) => {
     }
 
     purchase.status = status;
+    purchase.invoiceNumber = invoiceNumber;
     purchase.date = date;
     purchase.supplierName = supplierName;
+    
+    purchase.supplierAccount = supplierAccount;
     purchase.category = category;
     purchase.vatCode = vatCode;
     purchase.currency = currency;

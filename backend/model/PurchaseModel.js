@@ -2,15 +2,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const purchaseSchema = new Schema({
-  status: { type: String, required: true },
-  date: { type: Date, required: true },
-  supplierName: { type: String, required: true },
-  category: { type: String, required: true },
-  vatCode: { type: String, required: true },
-  currency: { type: String, required: true },
-  net: { type: Number, required: true },
-  vat: { type: Number, required: true },
-  total: { type: Number, required: true },
+  status: { type: String, required: false},
+  invoiceNumber:{type: String},
+  date: { type: Date, required: false },
+  supplierName: { type: String, required: false },
+  supplierAccount: { type: String, required: false },
+  category: { type: String, required: false },
+  vatCode: { type: String, required: false },
+  currency: { type: String, required: false },
+  net: { type: Number, required: false },
+  vat: { type: Number, required: false },
+  total: { type: Number, required: false },
   imageURL: { type: String, required: false },
   reason: { type: String, required: false }
 });
