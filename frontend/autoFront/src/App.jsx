@@ -1,10 +1,10 @@
-import './App.css'
+import Purchases from './components/purchase/Purchase'
 
 function App() {
 
   return (
     <>
-    <h1>shuru karo bhai</h1>
+    <Purchases/>
     </>
   )
 }
