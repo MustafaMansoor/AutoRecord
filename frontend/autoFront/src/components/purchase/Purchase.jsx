@@ -9,16 +9,13 @@ import {
   TableRow,
   Paper,
   Button,
-  Checkbox,
 } from '@mui/material';
-import PurchasesHeader from './PurchaseHeader';
 
 const Purchases = () => {
   const [purchases, setPurchases] = useState([]);
 
   useEffect(() => {
     const companyId = '667d4c5b2ed036e6bbe8e967';
-    // Replace with your backend endpoint
     axios.get(`http://localhost:3000/api/companies/${companyId}/purchases`)
       .then(response => {
         if (response.data && Array.isArray(response.data.purchases)) {
@@ -34,18 +31,17 @@ const Purchases = () => {
 
   return (
     <div>
-      {/* <PurchasesHeader /> */}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell> <b>View</b></TableCell>
+              <TableCell><b>View</b></TableCell>
               <TableCell><b>Date</b></TableCell>
               <TableCell><b>Supplier Name</b></TableCell>
               <TableCell><b>Supplier Account</b></TableCell>
               <TableCell><b>Category</b></TableCell>
               <TableCell><b>VAT Code</b></TableCell>
-              <TableCell><b>Cur</b></TableCell>
+              <TableCell><b>Currency</b></TableCell>
               <TableCell><b>Net</b></TableCell>
               <TableCell><b>VAT</b></TableCell>
               <TableCell><b>Total</b></TableCell>
@@ -54,7 +50,7 @@ const Purchases = () => {
           <TableBody>
             {purchases.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={11} align="center">
+                <TableCell colSpan={10} align="center">
                   No data available
                 </TableCell>
               </TableRow>
