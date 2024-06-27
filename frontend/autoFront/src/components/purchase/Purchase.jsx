@@ -17,8 +17,9 @@ const Purchases = () => {
   const [purchases, setPurchases] = useState([]);
 
   useEffect(() => {
+    const companyId = '667d4c5b2ed036e6bbe8e967';
     // Replace with your backend endpoint
-    axios.get('http://localhost:3000/api/purchase')
+    axios.get(`http://localhost:3000/api/companies/${companyId}/purchases`)
       .then(response => {
         if (response.data && Array.isArray(response.data.purchases)) {
           setPurchases(response.data.purchases);
@@ -33,22 +34,21 @@ const Purchases = () => {
 
   return (
     <div>
-      <PurchasesHeader />
+      {/* <PurchasesHeader /> */}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>View</TableCell>
-              <TableCell>Approve</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Supplier Name</TableCell>
-              <TableCell>Supplier Account</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>VAT Code</TableCell>
-              <TableCell>Cur</TableCell>
-              <TableCell>Net</TableCell>
-              <TableCell>VAT</TableCell>
-              <TableCell>Total</TableCell>
+              <TableCell> <b>View</b></TableCell>
+              <TableCell><b>Date</b></TableCell>
+              <TableCell><b>Supplier Name</b></TableCell>
+              <TableCell><b>Supplier Account</b></TableCell>
+              <TableCell><b>Category</b></TableCell>
+              <TableCell><b>VAT Code</b></TableCell>
+              <TableCell><b>Cur</b></TableCell>
+              <TableCell><b>Net</b></TableCell>
+              <TableCell><b>VAT</b></TableCell>
+              <TableCell><b>Total</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -62,7 +62,6 @@ const Purchases = () => {
               purchases.map((purchase, index) => (
                 <TableRow key={index}>
                   <TableCell><Button variant="contained">View</Button></TableCell>
-                  <TableCell><Checkbox checked={purchase.status === 'approved'} /></TableCell>
                   <TableCell>{purchase.date || ''}</TableCell>
                   <TableCell>{purchase.supplierName || ''}</TableCell>
                   <TableCell>{purchase.supplierAccount || ''}</TableCell>

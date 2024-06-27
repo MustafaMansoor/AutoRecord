@@ -23,11 +23,6 @@ app.get("/", (req, res) => {
 // Use company routes
 app.use("/api/companies", companyRoutes);
 
-app.use("/api/purchase", purchaseRoutes);
-
-app.use("/api/sales", salesRoutes);
-
-app.use("/api/suppliers", supplierRoutes); // Use supplier routes
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
