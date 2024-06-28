@@ -354,6 +354,5 @@ module.exports = {
   addSupplierToCompany,
   getAllPurchasesByCompany,
   getAllSalesByCompany,
-  getAllSuppliersByCompany
-  
+  getAllSuppliersByCompany,
 };

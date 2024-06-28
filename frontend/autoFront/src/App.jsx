@@ -1,11 +1,13 @@
 import Purchases from './components/purchase/Purchase'
+import Dashboard from './components/dashboard/Dashboard'
 
 function App() {
 
   return (
     <>
     <div>
-    <Purchases/>
+    {/* <Purchases/> */}
+    <Dashboard/>
     </div>
     </>
   )

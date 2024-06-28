@@ -1,0 +1,25 @@
+.button {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    background-color: #86B049;
+    color: white;
+    border: 2px solid #597C26;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, border-color 0.3s; /* Add transition for smooth hover effect */
+  }
+  
+  .button-icon {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .button:hover {
+    background-color: #648435; /* Darker green on hover */
+    border-color: #648435; /* Lighter green on hover */
+  }
+  

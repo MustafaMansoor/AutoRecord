@@ -1,0 +1,16 @@
+.dashboard {
+  display: flex;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+.content-center {
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 50px);
+  background-color: white;
+  color: black;
+  padding: 20px;
+}
