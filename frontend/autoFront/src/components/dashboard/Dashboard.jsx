@@ -22,15 +22,9 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="dashboard">
-      <Sidebar />
-      <div className="main-content">
-        <Topbar />
         <div className="content-center">
           <CompanyTable companies={companies} />
         </div>
-      </div>
-    </div>
   );
 };
 

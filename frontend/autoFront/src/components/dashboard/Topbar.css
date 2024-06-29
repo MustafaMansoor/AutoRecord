@@ -1,17 +1,17 @@
 .topbar {
-    display: flex;
-    justify-content: flex-end;
-    background-color: #2f2f2f;
-    padding: 10px;
-    color: white;
-  }
-  
-  .topbar-button {
-    margin-left: 10px;
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
+  display: flex;
+  justify-content: flex-end;
+  background-color: #2f2f2f;
+  padding: 10px;
+  color: white;
+  height: 50px;
+}
+
+.topbar-button {
+  margin-left: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
