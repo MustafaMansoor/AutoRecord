@@ -153,14 +153,15 @@ const deleteCompany = async (req, res) => {
   }
 };
 
-
 const addPurchaseToCompany = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
     const { companyId } = req.params;
-    const { purchase } = req.body;
-
+    const purchase = req.body; // Access the purchase directly from req.body
+    console.log("Request params:", req.params);  // Ensure companyId is defined
+    console.log("Request body:", req.body);      // Ensure purchase object is correctly structured
+  
     // Validate purchase data
     const validatedPurchase = {
       status: purchase.status || '',
@@ -199,6 +200,8 @@ const addPurchaseToCompany = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
 };
+
+
 
 const getAllPurchasesByCompany = async (req, res) => {
   try {

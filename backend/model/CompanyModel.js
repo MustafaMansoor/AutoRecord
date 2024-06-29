@@ -7,7 +7,7 @@ const CompanySchema = new Schema({
   currency: { type: String, required: true },
   dateFormat: { type: String, required: true },
   purchases: [{ type: Schema.Types.ObjectId, ref: 'Purchase' }],
-  sales: [{ type: Schema.Types.ObjectId, ref: 'Sale' }],
+  sales: [{ type: Schema.Types.ObjectId, ref: 'Sales' }],
   suppliers: [{ type: Schema.Types.ObjectId, ref: 'Supplier' }],
 });
 
