@@ -5,7 +5,6 @@ const CompanySchema = new Schema({
   companyName: { type: String, required: true },
   country: { type: String, required: true },
   currency: { type: String, required: true },
-  dateFormat: { type: String, required: true },
   purchases: [{ type: Schema.Types.ObjectId, ref: 'Purchase' }],
   sales: [{ type: Schema.Types.ObjectId, ref: 'Sales' }],
   suppliers: [{ type: Schema.Types.ObjectId, ref: 'Supplier' }],

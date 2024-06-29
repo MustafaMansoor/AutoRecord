@@ -9,11 +9,11 @@ const createCompany = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
-    const { purchases = [], sales = [], suppliers = [], dateFormat, currency, country, companyName, ...companyData } = req.body;
+    const { purchases = [], sales = [], suppliers = [], currency, country, companyName, ...companyData } = req.body;
 
     // Check if required fields are provided
-    if (!dateFormat || !currency || !country || !companyName) {
-      throw new Error('Missing required fields: dateFormat, currency, country, or companyName');
+    if (!currency || !country || !companyName) {
+      throw new Error('Missing required fields: currency, country, or companyName');
     }
 
     // Ensure each purchase has all required fields
@@ -77,7 +77,7 @@ const createCompany = async (req, res) => {
 
     // Create company with the referenced ObjectIds
     const newCompany = await Company.create(
-      [{ ...companyData, dateFormat, currency, country, companyName, purchases: purchaseIds, sales: saleIds, suppliers: supplierIds }],
+      [{ ...companyData, currency, country, companyName, purchases: purchaseIds, sales: saleIds, suppliers: supplierIds }],
       { session }
     );
 
