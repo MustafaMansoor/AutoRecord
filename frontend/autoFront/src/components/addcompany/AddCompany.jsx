@@ -68,7 +68,7 @@ const AddCompany = ({ show, handleClose }) => {
   return (
     <div className="addcompany-backdrop">
       <div className="addcompany-content">
-        <button className="close-button" onClick={handleClose}>
+        <button className="close-button-addcompany" onClick={handleClose}>
           &times;
         </button>
         <h2 className="addcompany-title">Add Company</h2>
