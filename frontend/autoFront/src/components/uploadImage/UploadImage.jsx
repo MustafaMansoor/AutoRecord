@@ -11,6 +11,7 @@ const UploadImage = ({ show, handleClose }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
   const categories = ['purchase', 'sales', 'suppliers'];
 
@@ -34,22 +35,42 @@ const UploadImage = ({ show, handleClose }) => {
   };
 
   const uploadImage = async () => {
-    if (!selectedImage) return;
+    if (!selectedImage || !selectedCompany || !selectedCategory) return;
 
     const formData = new FormData();
     formData.append('file', selectedImage);
-    formData.append('upload_preset', 'wmxcw7t4'); 
-    formData.append('cloud_name', 'dkxbixsze'); 
+    formData.append('upload_preset', 'wmxcw7t4');
+    formData.append('cloud_name', 'dkxbixsze');
+
+    setIsUploading(true);
 
     try {
-      const response = await axios.post(
+      const uploadResponse = await axios.post(
         'https://api.cloudinary.com/v1_1/dkxbixsze/image/upload',
         formData
       );
-      console.log('Uploaded Image URL:', response.data.url);
-      setUploadedImageUrl(response.data.url);
+      console.log('Uploaded Image URL:', uploadResponse.data.url);
+      setUploadedImageUrl(uploadResponse.data.url);
+      setIsUploading(false);
     } catch (error) {
       console.error('Error uploading image:', error);
+      setIsUploading(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!uploadedImageUrl || !selectedCompany || !selectedCategory) return;
+
+    try {
+      const apiResponse = await axios.post('http://localhost:3000/api/upload', {
+        imageUrl: uploadedImageUrl,
+        company: selectedCompany,
+        category: selectedCategory,
+      });
+
+      console.log('API Response:', apiResponse.data);
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
@@ -94,7 +115,14 @@ const UploadImage = ({ show, handleClose }) => {
         <div>
           <label htmlFor="image-upload">Upload Image:</label>
           <input type="file" id="image-upload" onChange={handleImageChange} />
-          <button onClick={uploadImage}>Upload Image</button>
+          <button onClick={uploadImage} disabled={isUploading}>
+            {isUploading ? 'Uploading...' : 'Upload Image'}
+          </button>
+        </div>
+        <div>
+          <button onClick={handleSubmit} disabled={!uploadedImageUrl || isUploading}>
+            Submit
+          </button>
         </div>
       </div>
     </div>

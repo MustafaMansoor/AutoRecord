@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import { Business } from '@mui/icons-material';
 import axios from 'axios';
+import Purchases from '../purchase/Purchase';
 
 const CompanyTable = ({ companies }) => {
+  const [showPurchase, setShowPurchase] = useState(false);
+
+  const handlePurchase = () => {
+    setShowPurchase(true);
+  };
   const [companyData, setCompanyData] = useState([]);
 
   useEffect(() => {
@@ -65,7 +71,12 @@ const CompanyTable = ({ companies }) => {
                   {company.companyName}
                 </div>
               </TableCell>
-              <TableCell>{company.purchasesCount}</TableCell>
+              <TableCell>
+                     <div onClick={handlePurchase} style={{ cursor: 'pointer' }}>
+                     {company.purchasesCount}
+                      </div>
+                      {/* {showPurchase && <Purchases company={company} />} */}
+              </TableCell>
               <TableCell>{company.salesCount}</TableCell>
               <TableCell>{company.suppliersCount}</TableCell>
               <TableCell>

@@ -4,11 +4,7 @@ const app = express();
 const cors = require("cors");
 const companyRoutes = require("./routes/CompanyRoutes"); // Adjust the path as necessary
 
-const purchaseRoutes = require("./routes/PurchaseRoutes"); // Adjust the path as necessary
-
-const salesRoutes = require("./routes/SalesRoutes");
-
-const supplierRoutes = require("./routes/SupplierRoutes"); // Adjust the path as necessary
+const ImageRoute = require("./routes/UploadImage");
 require("./connection"); // Import the connection setup file
 
 const port = process.env.PORT || 3000;
@@ -22,9 +18,10 @@ app.get("/", (req, res) => {
 
 // Use company routes
 app.use("/api/companies", companyRoutes);
-app.use("/api/purchases", purchaseRoutes);
-app.use("/api/sales", salesRoutes);
-app.use("/api/suppliers", supplierRoutes);
+
+
+app.use("/api/upload", ImageRoute);
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

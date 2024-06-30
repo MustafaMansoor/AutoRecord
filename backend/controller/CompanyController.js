@@ -158,9 +158,9 @@ const addPurchaseToCompany = async (req, res) => {
   session.startTransaction();
   try {
     const { companyId } = req.params;
-    const purchase = req.body; // Access the purchase directly from req.body
-    console.log("Request params:", req.params);  // Ensure companyId is defined
-    console.log("Request body:", req.body);      // Ensure purchase object is correctly structured
+    const purchase = req.body; 
+    console.log("Request params:", req.params);  
+    console.log("Request body:", req.body);   
   
     // Validate purchase data
     const validatedPurchase = {
@@ -228,7 +228,7 @@ const addSaleToCompany = async (req, res) => {
   session.startTransaction();
   try {
     const { companyId } = req.params;
-    const { sale } = req.body;
+    const  sale  = req.body;
 
     // Validate sale data
     const validatedSale = {
@@ -274,7 +274,7 @@ const addSupplierToCompany = async (req, res) => {
   session.startTransaction();
   try {
     const { companyId } = req.params;
-    const { supplier } = req.body;
+    const  supplier  = req.body;
 
     // Validate supplier data
     const validatedSupplier = {

@@ -11,11 +11,10 @@ import {
   Button,
 } from '@mui/material';
 
-const Purchases = () => {
+const Purchases = ({companyId}) => {
   const [purchases, setPurchases] = useState([]);
 
   useEffect(() => {
-    const companyId = '667d4c5b2ed036e6bbe8e967';
     axios.get(`http://localhost:3000/api/companies/${companyId}/purchases`)
       .then(response => {
         if (response.data && Array.isArray(response.data.purchases)) {
