@@ -1,0 +1,84 @@
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  width: 100%;
+  height: 260px;
+  margin: 10px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  color: #333;
+  font-weight: bold;
+}
+
+.card-details-body {
+  margin-top: 25px;
+}
+
+.status {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
+  margin-top: 20px;
+  width: 100%;
+}
+.status-first-part {
+  flex: 0.02;
+}
+.status-second-part {
+  flex: 0.6;
+}
+.status-third-part {
+  flex: 0.4;
+}
+
+.status-text-style {
+  color: #558b2f;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.status-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  color: #666;
+}
+.status-icon:hover {
+  color: #558b2f;
+}
+
+.status span {
+  font-size: 1rem;
+  color: #666;
+}
+
+.status span:hover {
+  color: #558b2f;
+}

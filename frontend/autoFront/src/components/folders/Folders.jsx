@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Card, CardContent, Typography, Grid } from "@mui/material";
+import "./Folders.css"; // Import the CSS file
+import InboxIcon from "@mui/icons-material/Inbox";
+import CancelIcon from "@mui/icons-material/Cancel";
+import HourglassFullIcon from "@mui/icons-material/HourglassFull";
 
 const Folders = () => {
   const { companyId } = useParams();
@@ -47,36 +50,55 @@ const Folders = () => {
   }, [companyId]);
 
   const renderCard = (title, data) => (
-    <Card sx={{ minWidth: 275, margin: 2 }}>
-      <CardContent>
-        <Typography variant="h5" component="div">
-          {title}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Inbox: {data.inbox}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Rejected: {data.rejected}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Processing: {data.processing}
-        </Typography>
-      </CardContent>
-    </Card>
+    <div className="card">
+      <div className="card-content">
+        <h3 className="card-title">{title}</h3>
+        <hr />
+        <div className="card-details-body">
+          <div className="status">
+            <div className="status-first-part">
+              <InboxIcon className="status-icon" />
+            </div>
+            <div className="status-second-part">
+              <span className="status-text-style">Inbox</span>
+            </div>
+            <div className="status-third-part">
+              <span className="status-text-style">{data.inbox}</span>
+            </div>
+          </div>
+          <div className="status">
+            <div className="status-first-part">
+              <CancelIcon className="status-icon" />
+            </div>
+            <div className="status-second-part">
+              <span className="status-text-style">Rejected</span>
+            </div>
+            <div className="status-third-part">
+              <span className="status-text-style">{data.rejected}</span>
+            </div>
+          </div>
+          <div className="status">
+            <div className="status-first-part">
+              <HourglassFullIcon className="status-icon" />
+            </div>
+            <div className="status-second-part">
+              <span className="status-text-style">Processing</span>
+            </div>
+            <div className="status-third-part">
+              <span className="status-text-style">{data.processing}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} sm={6} md={4}>
-        {renderCard("Purchases", counts.purchases)}
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        {renderCard("Sales", counts.sales)}
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        {renderCard("Suppliers", counts.suppliers)}
-      </Grid>
-    </Grid>
+    <div className="grid-container">
+      {renderCard("Purchases", counts.purchases)}
+      {renderCard("Sales", counts.sales)}
+      {renderCard("Suppliers", counts.suppliers)}
+    </div>
   );
 };
 
