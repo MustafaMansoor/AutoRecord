@@ -3,14 +3,23 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { Business } from '@mui/icons-material';
 import axios from 'axios';
 import Purchases from '../purchase/Purchase';
+import { useNavigate } from 'react-router-dom';
 
 const CompanyTable = ({ companies }) => {
-  const [showPurchase, setShowPurchase] = useState(false);
 
-  const handlePurchase = () => {
-    setShowPurchase(true);
-  };
-  const [companyData, setCompanyData] = useState([]);
+  const navigate = useNavigate();
+const [companyData, setCompanyData] = useState([]);
+
+const handlePurchase = (companyId) => {
+  navigate(`/purchases/${companyId}`);
+};
+const handleSales = (companyId) => {
+  navigate(`/sales/${companyId}`);
+};
+const handleSupplier = (companyId) => {
+  navigate(`/suppliers/${companyId}`);
+};
+
 
   useEffect(() => {
     const fetchCompanyDetails = async () => {
@@ -72,13 +81,20 @@ const CompanyTable = ({ companies }) => {
                 </div>
               </TableCell>
               <TableCell>
-                     <div onClick={handlePurchase} style={{ cursor: 'pointer' }}>
-                     {company.purchasesCount}
-                      </div>
-                      {/* {showPurchase && <Purchases company={company} />} */}
+                <div onClick={() => handlePurchase(company._id)} style={{ cursor: 'pointer' }}>
+                  {company.purchasesCount}
+                </div>
               </TableCell>
-              <TableCell>{company.salesCount}</TableCell>
-              <TableCell>{company.suppliersCount}</TableCell>
+              <TableCell>
+                <div onClick={() => handleSales(company._id)} style={{ cursor: 'pointer' }}>
+                  {company.salesCount}
+                </div>
+              </TableCell>
+              <TableCell>
+                <div onClick={() => handleSupplier(company._id)} style={{ cursor: 'pointer' }}>
+                  {company.suppliersCount}
+                </div>
+              </TableCell>
               <TableCell>
                 <Button 
                   variant="contained"  

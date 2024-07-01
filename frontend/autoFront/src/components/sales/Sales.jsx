@@ -12,23 +12,23 @@ import {
   Button,
 } from '@mui/material';
 
-const Purchases = () => {
-  const [purchases, setPurchases] = useState([]);
+const Sales = () => {
+  const [sales, setSales] = useState([]);
   const { companyId } = useParams(); 
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/companies/${companyId}/purchases`)
+    axios.get(`http://localhost:3000/api/companies/${companyId}/sales`)
       .then(response => {
-        if (response.data && Array.isArray(response.data.purchases)) {
-          setPurchases(response.data.purchases);
+        if (response.data && Array.isArray(response.data.sales)) {
+          setSales(response.data.sales);
         } else {
           console.error('Unexpected response data:', response.data);
         }
       })
       .catch(error => {
-        console.error('There was an error fetching the purchases!', error);
+        console.error('There was an error fetching the sales!', error);
       });
-  }, []);
+  }, [companyId]);
 
   return (
     <div>
@@ -37,9 +37,10 @@ const Purchases = () => {
           <TableHead>
             <TableRow>
               <TableCell><b>View</b></TableCell>
+              <TableCell><b>Invoice Number</b></TableCell>
               <TableCell><b>Date</b></TableCell>
-              <TableCell><b>Supplier Name</b></TableCell>
-              <TableCell><b>Supplier Account</b></TableCell>
+              <TableCell><b>Customer Name</b></TableCell>
+              <TableCell><b>Customer Account</b></TableCell>
               <TableCell><b>Category</b></TableCell>
               <TableCell><b>VAT Code</b></TableCell>
               <TableCell><b>Currency</b></TableCell>
@@ -49,25 +50,26 @@ const Purchases = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {purchases.length === 0 ? (
+            {sales.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={10} align="center">
+                <TableCell colSpan={12} align="center">
                   No data available
                 </TableCell>
               </TableRow>
             ) : (
-              purchases.map((purchase, index) => (
+              sales.map((sale, index) => (
                 <TableRow key={index}>
                   <TableCell><Button variant="contained">View</Button></TableCell>
-                  <TableCell>{purchase.date || ''}</TableCell>
-                  <TableCell>{purchase.supplierName || ''}</TableCell>
-                  <TableCell>{purchase.supplierAccount || ''}</TableCell>
-                  <TableCell>{purchase.category || ''}</TableCell>
-                  <TableCell>{purchase.vatCode || ''}</TableCell>
-                  <TableCell>{purchase.currency || ''}</TableCell>
-                  <TableCell>{purchase.net || ''}</TableCell>
-                  <TableCell>{purchase.vat || ''}</TableCell>
-                  <TableCell>{purchase.total || ''}</TableCell>
+                  <TableCell>{sale.invoiceNumber || ''}</TableCell>
+                  <TableCell>{sale.date || ''}</TableCell>
+                  <TableCell>{sale.customerName || ''}</TableCell>
+                  <TableCell>{sale.customerAccount || ''}</TableCell>
+                  <TableCell>{sale.category || ''}</TableCell>
+                  <TableCell>{sale.vatCode || ''}</TableCell>
+                  <TableCell>{sale.currency || ''}</TableCell>
+                  <TableCell>{sale.net || ''}</TableCell>
+                  <TableCell>{sale.vat || ''}</TableCell>
+                  <TableCell>{sale.total || ''}</TableCell>
                 </TableRow>
               ))
             )}
@@ -78,4 +80,4 @@ const Purchases = () => {
   );
 };
 
-export default Purchases;
+export default Sales;

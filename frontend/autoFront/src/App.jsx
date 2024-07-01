@@ -4,6 +4,9 @@ import Sidebar from './components/dashboard/Sidebar';
 import Topbar from './components/dashboard/Topbar';
 import Dashboard from './components/dashboard/Dashboard';
 import './app.css'
+import Purchases from './components/purchase/Purchase';
+import Sales from './components/sales/Sales';
+import Supplier from './components/suppliers/Supplier';
 function App() {
   return (
     <Router>
@@ -15,6 +18,11 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               
+              <Route path="/purchases/:companyId" element={<Purchases />} />
+              
+              <Route path="/sales/:companyId" element={<Sales />} />
+              
+              <Route path="/suppliers/:companyId" element={<Supplier />} />
             </Routes>
           </div>
         </div>
