@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 .sidebar {
   width: 80px;
@@ -11,7 +11,7 @@
   align-items: center;
   padding: 20px 0;
   border-right: 2px solid #585858;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .logo {
@@ -42,8 +42,9 @@
   transition: background-color 0.3s;
 }
 
-.logo ul li.active, .sidebar ul li:hover {
-  background-color: #86B049;
+.logo ul li.active,
+.sidebar ul li:hover {
+  background-color: #86b049;
   border-radius: 10px;
 }
 
@@ -67,7 +68,7 @@
 }
 
 .logout:hover {
-  background-color: #DC3F39;
+  background-color: #dc3f39;
   border-radius: 10px;
 }
 
@@ -77,4 +78,11 @@
 
 .logout .text {
   font-size: 12px;
+}
+
+/* Media Queries for Iphone 430px */
+@media screen and (max-width: 768px) {
+  .logout .text {
+    margin-left: 3px;
+  }
 }

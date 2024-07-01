@@ -15,3 +15,10 @@
   padding: 10px;
   cursor: pointer;
 }
+
+/* Media Queries for Iphone 430px */
+@media screen and (max-width: 768px) {
+  .topbar {
+    justify-content: flex-start;
+  }
+}
