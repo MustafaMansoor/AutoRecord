@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import CompanyTable from './CompanyTable';
-import './Dashboard.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import CompanyTable from "./CompanyTable";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const [companies, setCompanies] = useState([]);
@@ -9,10 +9,10 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/companies');
+        const response = await axios.get("http://localhost:3000/api/companies");
         setCompanies(response.data.companies);
       } catch (error) {
-        console.error('Error fetching companies:', error);
+        console.error("Error fetching companies:", error);
       }
     };
 
@@ -20,9 +20,9 @@ const Dashboard = () => {
   }, []);
 
   return (
-        <div className="content-center">
-          <CompanyTable companies={companies} />
-        </div>
+    <div className="content-center">
+      <CompanyTable companies={companies} />
+    </div>
   );
 };
 

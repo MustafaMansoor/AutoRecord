@@ -85,4 +85,11 @@
   .logout .text {
     margin-left: 3px;
   }
+
+  .logo ul li .text {
+    display: none;
+  }
+  .logout .text {
+    display: none;
+  }
 }
