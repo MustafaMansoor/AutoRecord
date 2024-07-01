@@ -68,10 +68,17 @@ const AddCompany = ({ show, handleClose }) => {
   return (
     <div className="addcompany-backdrop">
       <div className="addcompany-content">
-        <button className="close-button-addcompany" onClick={handleClose}>
-          &times;
-        </button>
-        <h2 className="addcompany-title">Add Company</h2>
+        <div className="addcompany-header">
+          <div className="addcompany-header-left">
+            <h2 className="addcompany-title">Add Company</h2>
+          </div>
+          <div className="addcompany-header-right">
+            <button className="close-button-addcompany" onClick={handleClose}>
+              &times;
+            </button>
+          </div>
+        </div>
+
         <hr className="divider" />
         <form className="addcompany-form" onSubmit={handleSubmit}>
           <div className="form-group">

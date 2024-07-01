@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 .addcompany-backdrop {
   position: fixed;
@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .addcompany-content {
@@ -25,6 +25,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.addcompany-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.addcompany-header-left {
+  flex: 0.96;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.addcompany-header-right {
+  flex: 0.04;
 }
 
 .close-button-addcompany {
@@ -77,12 +93,20 @@
   font-size: 1rem;
   border: 1px solid #c3c3c3;
   border-radius: 6px;
+  width: 97%;
+}
+
+.form-group select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #c3c3c3;
+  border-radius: 6px;
   width: 100%;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #597C26; /* Theme color */
+  border-color: #597c26; /* Theme color */
   outline: none; /* Optional: Remove default outline */
 }
 
@@ -92,7 +116,7 @@
 
 .submit-button {
   padding: 10px 30px;
-  background-color: #86B049;
+  background-color: #86b049;
   color: white;
   border: none;
   border-radius: 4px;
@@ -106,10 +130,38 @@
 
 .submit-button:hover {
   background-color: #6c9430;
-  border-color: #516b2a; 
+  border-color: #516b2a;
 }
 
-/* Media Queries */
+/* Media Queries with Max-width*/
+@media (max-width: 768px) {
+  .addcompany-backdrop {
+    padding: 20px;
+  }
+  .addcompany-content {
+    width: 90%;
+  }
+
+  .addcompany-form {
+    padding: 20px;
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-group label {
+    margin-bottom: 5px;
+  }
+
+  .form-group input {
+    width: 96.1%;
+  }
+}
+
+/* Old Media Queries */
+/*
 @media (min-width: 768px) {
   .addcompany-content {
     width: 70%;
@@ -140,3 +192,4 @@
     margin-left: 40%;
   }
 }
+*/
