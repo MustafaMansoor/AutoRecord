@@ -6,6 +6,11 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import CancelIcon from "@mui/icons-material/Cancel";
 import HourglassFullIcon from "@mui/icons-material/HourglassFull";
 
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import NotInterestedOutlinedIcon from '@mui/icons-material/NotInterestedOutlined';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+
 const Folders = () => {
   const { companyId } = useParams();
   const [counts, setCounts] = useState({
@@ -63,29 +68,29 @@ const Folders = () => {
               <span className="status-text-style">Inbox</span>
             </div>
             <div className="status-third-part">
-              <span className="status-text-style">{data.inbox}</span>
+              <span className="status-text-style" style={{ color: 'green' }}>{data.inbox}</span>
             </div>
           </div>
           <div className="status">
             <div className="status-first-part">
-              <CancelIcon className="status-icon" />
+              <CancelOutlinedIcon className="status-icon" />
             </div>
             <div className="status-second-part">
               <span className="status-text-style">Rejected</span>
             </div>
             <div className="status-third-part">
-              <span className="status-text-style">{data.rejected}</span>
+              <span className="status-text-style" style={{ color: 'green' }}>{data.rejected}</span>
             </div>
           </div>
           <div className="status">
             <div className="status-first-part">
-              <HourglassFullIcon className="status-icon" />
+              <ScheduleIcon className="status-icon" />
             </div>
             <div className="status-second-part">
               <span className="status-text-style">Processing</span>
             </div>
             <div className="status-third-part">
-              <span className="status-text-style">{data.processing}</span>
+              <span className="status-text-style"style={{ color: 'green' }}>{data.processing}</span>
             </div>
           </div>
         </div>

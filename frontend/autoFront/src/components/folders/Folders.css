@@ -3,9 +3,10 @@
 .grid-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-around;
   font-family: "Inter", sans-serif;
+  margin-top: 20px;
+  margin-left: 50px;
+  column-gap: 20px;
 }
 
 .card {
@@ -61,10 +62,13 @@
 }
 
 .status-text-style {
-  color: #558b2f;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: normal;
   margin-left: 10px;
+}
+
+.status-count-style{
+  color:#558b2f;
 }
 
 .status-icon {
@@ -73,15 +77,8 @@
   margin-right: 10px;
   color: #666;
 }
-.status-icon:hover {
-  color: #558b2f;
-}
 
 .status span {
   font-size: 1rem;
   color: #666;
-}
-
-.status span:hover {
-  color: #558b2f;
 }
