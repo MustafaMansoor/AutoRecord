@@ -10,10 +10,14 @@ import {
   TableRow,
   Paper,
   Button,
+  Tabs,
+  Tab,
+  Box,
 } from '@mui/material';
 
 const Sales = () => {
   const [sales, setSales] = useState([]);
+  const [tabValue, setTabValue] = useState('pending'); // Default to "Processing"
   const { companyId } = useParams(); 
 
   useEffect(() => {
@@ -30,8 +34,21 @@ const Sales = () => {
       });
   }, [companyId]);
 
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
+  const filteredSales = sales.filter(sale => sale.status === tabValue);
+
   return (
     <div>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={tabValue} onChange={handleTabChange}>
+          <Tab label="Inbox" value="inbox" />
+          <Tab label="Processing" value="pending" />
+          <Tab label="Rejected" value="rejected" />
+        </Tabs>
+      </Box>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -50,18 +67,18 @@ const Sales = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sales.length === 0 ? (
+            {filteredSales.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={12} align="center">
+                <TableCell colSpan={11} align="center">
                   No data available
                 </TableCell>
               </TableRow>
             ) : (
-              sales.map((sale, index) => (
+              filteredSales.map((sale, index) => (
                 <TableRow key={index}>
                   <TableCell><Button variant="contained">View</Button></TableCell>
                   <TableCell>{sale.invoiceNumber || ''}</TableCell>
-                  <TableCell>{sale.date || ''}</TableCell>
+                  <TableCell>{new Date(sale.date).toLocaleDateString() || ''}</TableCell>
                   <TableCell>{sale.customerName || ''}</TableCell>
                   <TableCell>{sale.customerAccount || ''}</TableCell>
                   <TableCell>{sale.category || ''}</TableCell>

@@ -10,11 +10,15 @@ import {
   TableRow,
   Paper,
   Button,
+  Tabs,
+  Tab,
+  Box,
 } from '@mui/material';
 
-const Purchases = () => {
+const Supplier = () => {
   const [purchases, setPurchases] = useState([]);
-  const { companyId } = useParams(); 
+  const [tabValue, setTabValue] = useState('pending'); // Default to "Processing"
+  const { companyId } = useParams();
 
   useEffect(() => {
     axios.get(`http://localhost:3000/api/companies/${companyId}/purchases`)
@@ -28,10 +32,23 @@ const Purchases = () => {
       .catch(error => {
         console.error('There was an error fetching the purchases!', error);
       });
-  }, []);
+  }, [companyId]);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
+  const filteredPurchases = purchases.filter(purchase => purchase.status === tabValue);
 
   return (
     <div>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={tabValue} onChange={handleTabChange}>
+          <Tab label="Inbox" value="inbox" />
+          <Tab label="Processing" value="pending" />
+          <Tab label="Rejected" value="rejected" />
+        </Tabs>
+      </Box>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -49,17 +66,17 @@ const Purchases = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {purchases.length === 0 ? (
+            {filteredPurchases.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={10} align="center">
                   No data available
                 </TableCell>
               </TableRow>
             ) : (
-              purchases.map((purchase, index) => (
+              filteredPurchases.map((purchase, index) => (
                 <TableRow key={index}>
                   <TableCell><Button variant="contained">View</Button></TableCell>
-                  <TableCell>{purchase.date || ''}</TableCell>
+                  <TableCell>{new Date(purchase.date).toLocaleDateString() || ''}</TableCell>
                   <TableCell>{purchase.supplierName || ''}</TableCell>
                   <TableCell>{purchase.supplierAccount || ''}</TableCell>
                   <TableCell>{purchase.category || ''}</TableCell>
@@ -78,4 +95,4 @@ const Purchases = () => {
   );
 };
 
-export default Purchases;
+export default Supplier;

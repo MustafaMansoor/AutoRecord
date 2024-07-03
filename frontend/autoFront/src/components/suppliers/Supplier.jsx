@@ -10,10 +10,14 @@ import {
   TableRow,
   Paper,
   Button,
+  Tabs,
+  Tab,
+  Box,
 } from '@mui/material';
 
 const Supplier = () => {
   const [suppliers, setSuppliers] = useState([]);
+  const [tabValue, setTabValue] = useState('pending'); // Default to "Processing"
   const { companyId } = useParams(); 
 
   useEffect(() => {
@@ -30,8 +34,21 @@ const Supplier = () => {
       });
   }, [companyId]);
 
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
+  const filteredSuppliers = suppliers.filter(supplier => supplier.status === tabValue);
+
   return (
     <div>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={tabValue} onChange={handleTabChange}>
+          <Tab label="Inbox" value="inbox" />
+          <Tab label="Processing" value="pending" />
+          <Tab label="Rejected" value="rejected" />
+        </Tabs>
+      </Box>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -46,17 +63,17 @@ const Supplier = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {suppliers.length === 0 ? (
+            {filteredSuppliers.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={9} align="center">
+                <TableCell colSpan={7} align="center">
                   No data available
                 </TableCell>
               </TableRow>
             ) : (
-              suppliers.map((supplier, index) => (
+              filteredSuppliers.map((supplier, index) => (
                 <TableRow key={index}>
                   <TableCell><Button variant="contained">View</Button></TableCell>
-                  <TableCell>{supplier.date || ''}</TableCell>
+                  <TableCell>{new Date(supplier.date).toLocaleDateString() || ''}</TableCell>
                   <TableCell>{supplier.supplierName || ''}</TableCell>
                   <TableCell>{supplier.supplierAccount || ''}</TableCell>
                   <TableCell>{supplier.currency || ''}</TableCell>
