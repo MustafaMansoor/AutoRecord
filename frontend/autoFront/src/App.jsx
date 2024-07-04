@@ -8,6 +8,7 @@ import Purchases from "./components/purchase/Purchase";
 import Sales from "./components/sales/Sales";
 import Supplier from "./components/suppliers/Supplier";
 import Folders from "./components/folders/Folders";
+import Index from "./components/ViewAndEdit/Index";
 
 function App() {
   return (
@@ -20,9 +21,13 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/companies/:companyId/folders" element={<Folders />} />
+
               <Route path="/purchases/:companyId" element={<Purchases />} />
+              <Route path="/purchases/:companyId/View" element={<Index />} />
+              
               <Route path="/sales/:companyId" element={<Sales />} />
               <Route path="/suppliers/:companyId" element={<Supplier />} />
+              
               {/* Add routes for new sidebar items */}
               <Route path="/people" element={<div>People Page</div>} />
               <Route path="/settings" element={<div>Settings Page</div>} />

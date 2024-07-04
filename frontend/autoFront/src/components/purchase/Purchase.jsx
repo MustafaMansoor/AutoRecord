@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   Table,
@@ -15,16 +15,18 @@ import {
   Box,
 } from '@mui/material';
 
-const Supplier = () => {
+const Purchase = () => {
   const [purchases, setPurchases] = useState([]);
   const [tabValue, setTabValue] = useState('pending'); // Default to "Processing"
   const { companyId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`http://localhost:3000/api/companies/${companyId}/purchases`)
       .then(response => {
         if (response.data && Array.isArray(response.data.purchases)) {
           setPurchases(response.data.purchases);
+          console.log(response.data.purchases)
         } else {
           console.error('Unexpected response data:', response.data);
         }
@@ -39,6 +41,10 @@ const Supplier = () => {
   };
 
   const filteredPurchases = purchases.filter(purchase => purchase.status === tabValue);
+
+  const handleClickOpen = (purchase) => {
+    navigate(`/purchases/${companyId}/view`, { state: { purchase } });
+  };
 
   return (
     <div>
@@ -75,7 +81,14 @@ const Supplier = () => {
             ) : (
               filteredPurchases.map((purchase, index) => (
                 <TableRow key={index}>
-                  <TableCell><Button variant="contained">View</Button></TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      onClick={() => handleClickOpen(purchase)}
+                    >
+                      View
+                    </Button>
+                  </TableCell>
                   <TableCell>{new Date(purchase.date).toLocaleDateString() || ''}</TableCell>
                   <TableCell>{purchase.supplierName || ''}</TableCell>
                   <TableCell>{purchase.supplierAccount || ''}</TableCell>
@@ -95,4 +108,4 @@ const Supplier = () => {
   );
 };
 
-export default Supplier;
+export default Purchase;
