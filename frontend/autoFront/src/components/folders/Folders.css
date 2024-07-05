@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-.grid-container {
+.folder-grid-container {
   display: flex;
   flex-wrap: wrap;
   font-family: "Inter", sans-serif;
@@ -9,28 +9,28 @@
   column-gap: 20px;
 }
 
-.card {
+.folder-card {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   max-width: 300px;
-  width: 100%;
   height: 260px;
+  width: 100%;
   margin: 10px;
   overflow: hidden;
   transition: transform 0.2s;
 }
 
-.card:hover {
+.folder-card:hover {
   transform: translateY(-5px);
 }
 
-.card-content {
+.folder-card-content {
   padding: 20px;
 }
 
-.card-title {
+.folder-card-title {
   font-size: 1.5rem;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -38,11 +38,11 @@
   font-weight: bold;
 }
 
-.card-details-body {
+.folder-card-details-body {
   margin-top: 25px;
 }
 
-.status {
+.folder-status {
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -51,34 +51,34 @@
   margin-top: 20px;
   width: 100%;
 }
-.status-first-part {
+.folder-status-first-part {
   flex: 0.02;
 }
-.status-second-part {
+.folder-status-second-part {
   flex: 0.6;
 }
-.status-third-part {
+.folder-status-third-part {
   flex: 0.4;
 }
 
-.status-text-style {
+.folder-status-text-style {
   font-size: 1rem;
   font-weight: normal;
   margin-left: 10px;
 }
 
-.status-count-style{
-  color:#558b2f;
+.folder-status-count-style {
+  color: #558b2f;
 }
 
-.status-icon {
+.folder-status-icon {
   width: 20px;
   height: 20px;
   margin-right: 10px;
   color: #666;
 }
 
-.status span {
+.folder-status span {
   font-size: 1rem;
   color: #666;
 }

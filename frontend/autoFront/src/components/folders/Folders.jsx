@@ -3,13 +3,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./Folders.css"; // Import the CSS file
 import InboxIcon from "@mui/icons-material/Inbox";
-import CancelIcon from "@mui/icons-material/Cancel";
-import HourglassFullIcon from "@mui/icons-material/HourglassFull";
 
-import ScheduleIcon from '@mui/icons-material/Schedule';
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import NotInterestedOutlinedIcon from '@mui/icons-material/NotInterestedOutlined';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import ScheduleIcon from "@mui/icons-material/Schedule";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
 const Folders = () => {
   const { companyId } = useParams();
@@ -55,42 +51,57 @@ const Folders = () => {
   }, [companyId]);
 
   const renderCard = (title, data) => (
-    <div className="card">
-      <div className="card-content">
-        <h3 className="card-title">{title}</h3>
+    <div className="folder-card">
+      <div className="folder-card-content">
+        <h3 className="folder-card-title">{title}</h3>
         <hr />
-        <div className="card-details-body">
-          <div className="status">
-            <div className="status-first-part">
-              <InboxIcon className="status-icon" />
+        <div className="folder-card-details-body">
+          <div className="folder-status">
+            <div className="folder-status-first-part">
+              <InboxIcon className="folder-status-icon" />
             </div>
-            <div className="status-second-part">
-              <span className="status-text-style">Inbox</span>
+            <div className="folder-status-second-part">
+              <span className="folder-status-text-style">Inbox</span>
             </div>
-            <div className="status-third-part">
-              <span className="status-text-style" style={{ color: 'green' }}>{data.inbox}</span>
-            </div>
-          </div>
-          <div className="status">
-            <div className="status-first-part">
-              <CancelOutlinedIcon className="status-icon" />
-            </div>
-            <div className="status-second-part">
-              <span className="status-text-style">Rejected</span>
-            </div>
-            <div className="status-third-part">
-              <span className="status-text-style" style={{ color: 'green' }}>{data.rejected}</span>
+            <div className="folder-status-third-part">
+              <span
+                className="folder-status-text-style"
+                style={{ color: "green" }}
+              >
+                {data.inbox}
+              </span>
             </div>
           </div>
-          <div className="status">
-            <div className="status-first-part">
-              <ScheduleIcon className="status-icon" />
+          <div className="folder-status">
+            <div className="folder-status-first-part">
+              <CancelOutlinedIcon className="folder-status-icon" />
             </div>
-            <div className="status-second-part">
-              <span className="status-text-style">Processing</span>
+            <div className="folder-status-second-part">
+              <span className="folder-status-text-style">Rejected</span>
             </div>
-            <div className="status-third-part">
-              <span className="status-text-style"style={{ color: 'green' }}>{data.processing}</span>
+            <div className="folder-status-third-part">
+              <span
+                className="folder-status-text-style"
+                style={{ color: "green" }}
+              >
+                {data.rejected}
+              </span>
+            </div>
+          </div>
+          <div className="folder-status">
+            <div className="folder-status-first-part">
+              <ScheduleIcon className="folder-status-icon" />
+            </div>
+            <div className="folder-status-second-part">
+              <span className="folder-status-text-style">Processing</span>
+            </div>
+            <div className="folder-status-third-part">
+              <span
+                className="folder-status-text-style"
+                style={{ color: "green" }}
+              >
+                {data.processing}
+              </span>
             </div>
           </div>
         </div>
@@ -99,7 +110,7 @@ const Folders = () => {
   );
 
   return (
-    <div className="grid-container">
+    <div className="folder-grid-container">
       {renderCard("Purchases", counts.purchases)}
       {renderCard("Sales", counts.sales)}
       {renderCard("Suppliers", counts.suppliers)}
