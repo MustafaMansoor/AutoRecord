@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 .topbar {
   display: flex;
   justify-content: flex-end;
@@ -5,6 +6,7 @@
   padding: 10px;
   color: white;
   height: 50px;
+  font-family: "Inter", sans-serif;
 }
 
 .topbar-button {
