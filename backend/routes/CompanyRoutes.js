@@ -13,6 +13,9 @@ const {
   getAllSalesByCompany,
   getAllSuppliersByCompany,
   getAllFoldersByCompany,
+  editPurchaseForCompany,
+  editSaleForCompany,
+  editSupplierForCompany
 } = require("../controller/CompanyController.js");
 
 // Routes for managing companies
@@ -24,11 +27,17 @@ router
   .put(updateCompany)
   .delete(deleteCompany);
 
-// New routes for adding purchases, sales, and suppliers to a company
+// routes for adding purchases, sales, and suppliers to a company
 router.post("/:companyId/purchases", addPurchaseToCompany);
 router.post("/:companyId/sales", addSaleToCompany);
 router.post("/:companyId/suppliers", addSupplierToCompany);
 
+//routes for editing purchases, sales, and suppliers for a company
+router.put("/:companyId/purchases", editPurchaseForCompany);
+router.put("/:companyId/sales", editSaleForCompany);
+router.put("/:companyId/suppliers", editSupplierForCompany);
+
+// routes for getting purchases, sales, suppliers, and folders for a company
 router.get("/:companyId/purchases", getAllPurchasesByCompany);
 router.get("/:companyId/sales", getAllSalesByCompany);
 router.get("/:companyId/suppliers", getAllSuppliersByCompany);

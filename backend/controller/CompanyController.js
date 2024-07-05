@@ -354,6 +354,50 @@ const addSaleToCompany = async (req, res) => {
   }
 };
 
+const editSaleForCompany = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const { companyId, saleId } = req.params;
+    const saleUpdates = req.body;
+
+    // Validate sale data updates
+    const validatedSaleUpdates = {
+      status: saleUpdates.status,
+      invoiceNumber: saleUpdates.invoiceNumber,
+      date: saleUpdates.date,
+      customerName: saleUpdates.customerName,
+      customerAccount: saleUpdates.customerAccount,
+      category: saleUpdates.category,
+      vatCode: saleUpdates.vatCode,
+      currency: saleUpdates.currency,
+      net: saleUpdates.net,
+      vat: saleUpdates.vat,
+      total: saleUpdates.total,
+      imageURL: saleUpdates.imageURL,
+      reason: saleUpdates.reason,
+    };
+
+    // Update the sale
+    const updatedSale = await Sale.findByIdAndUpdate(
+      saleId,
+      { $set: validatedSaleUpdates },
+      { new: true, session }
+    );
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({ updatedSale });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Error editing sale for company:", error);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
+  }
+};
+
 const addSupplierToCompany = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -436,6 +480,51 @@ const getAllSuppliersByCompany = async (req, res) => {
       .json({ error: "Internal Server Error", details: error.message });
   }
 };
+
+const editSupplierForCompany = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const { companyId, supplierId } = req.params;
+    const supplierUpdates = req.body;
+
+    // Validate supplier data updates
+    const validatedSupplierUpdates = {
+      date: supplierUpdates.date,
+      supplierName: supplierUpdates.supplierName,
+      supplierAccount: supplierUpdates.supplierAccount,
+      currency: supplierUpdates.currency,
+      dateRange: supplierUpdates.dateRange,
+      status: supplierUpdates.status,
+      statementNumber: supplierUpdates.statementNumber,
+      imageURL: supplierUpdates.imageURL,
+      reason: supplierUpdates.reason,
+    };
+
+    // Update the supplier
+    const updatedSupplier = await Supplier.findByIdAndUpdate(
+      supplierId,
+      { $set: validatedSupplierUpdates },
+      { new: true, session }
+    );
+
+   
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({ updatedSupplier });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Error editing supplier for company:", error);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
+  }
+};
+
+
 const getAllFoldersByCompany = async (req, res) => {
   try {
     const { companyId } = req.params;
@@ -476,5 +565,7 @@ module.exports = {
   getAllSalesByCompany,
   getAllSuppliersByCompany,
   getAllFoldersByCompany,
-  editPurchaseForCompany
+  editPurchaseForCompany,
+  editSaleForCompany,
+  editSupplierForCompany
 };
