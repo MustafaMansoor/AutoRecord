@@ -188,8 +188,6 @@ const addPurchaseToCompany = async (req, res) => {
   try {
     const { companyId } = req.params;
     const purchase = req.body;
-    console.log("Request params:", req.params);
-    console.log("Request body:", req.body);
 
     // Validate purchase data
     const validatedPurchase = {
@@ -231,6 +229,62 @@ const addPurchaseToCompany = async (req, res) => {
       .json({ error: "Internal Server Error", details: error.message });
   }
 };
+const editPurchaseForCompany = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const { companyId, purchaseId } = req.params;
+    const purchaseUpdates = req.body;
+
+    // Validate purchase data
+    const validatedPurchaseUpdates = {
+      status: purchaseUpdates.status || "",
+      invoiceNumber: purchaseUpdates.invoiceNumber || "",
+      date: purchaseUpdates.date || new Date(),
+      supplierName: purchaseUpdates.supplierName || "",
+      supplierAccount: purchaseUpdates.supplierAccount || "",
+      category: purchaseUpdates.category || "",
+      vatCode: purchaseUpdates.vatCode || "",
+      currency: purchaseUpdates.currency || "",
+      net: purchaseUpdates.net || 0,
+      vat: purchaseUpdates.vat || 0,
+      total: purchaseUpdates.total || 0,
+      imageURL: purchaseUpdates.imageURL || "",
+      reason: purchaseUpdates.reason || "",
+    };
+
+    // Update the purchase
+    const updatedPurchase = await Purchase.findByIdAndUpdate(
+      purchaseId,
+      validatedPurchaseUpdates,
+      { new: true, session }
+    );
+
+    if (!updatedPurchase) {
+      throw new Error("Purchase not found");
+    }
+
+    // Ensure the purchase belongs to the company
+    const company = await Company.findOne({ _id: companyId, purchases: purchaseId }).session(session);
+    if (!company) {
+      throw new Error("Company not found or purchase does not belong to the company");
+    }
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({ updatedPurchase });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Error updating purchase for company:", error);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
+  }
+};
+
+
 
 const getAllPurchasesByCompany = async (req, res) => {
   try {
@@ -422,4 +476,5 @@ module.exports = {
   getAllSalesByCompany,
   getAllSuppliersByCompany,
   getAllFoldersByCompany,
+  editPurchaseForCompany
 };

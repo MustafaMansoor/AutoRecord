@@ -13,10 +13,10 @@ function Index() {
 
   return (
     <div className="index-container">
-      <div className="view-image">
+      <div className="card ">
         <ViewImage URL={purchase.imageURL} />
       </div>
-      <div className="edit-page">
+       <div className="card">
         <EditPage data={purchase} />
       </div>
     </div>
