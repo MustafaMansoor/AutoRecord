@@ -229,6 +229,7 @@ const addPurchaseToCompany = async (req, res) => {
       .json({ error: "Internal Server Error", details: error.message });
   }
 };
+
 const editPurchaseForCompany = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();

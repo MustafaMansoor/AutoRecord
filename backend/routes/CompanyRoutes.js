@@ -33,7 +33,7 @@ router.post("/:companyId/sales", addSaleToCompany);
 router.post("/:companyId/suppliers", addSupplierToCompany);
 
 //routes for editing purchases, sales, and suppliers for a company
-router.put("/:companyId/purchases", editPurchaseForCompany);
+router.put("/:companyId/purchases/:purchaseId", editPurchaseForCompany);
 router.put("/:companyId/sales", editSaleForCompany);
 router.put("/:companyId/suppliers", editSupplierForCompany);
 

@@ -37,7 +37,6 @@ const Purchase = () => {
       .then(response => {
         if (response.data && Array.isArray(response.data.purchases)) {
           setPurchases(response.data.purchases);
-          console.log(response.data.purchases)
         } else {
           console.error('Unexpected response data:', response.data);
         }
