@@ -1,0 +1,25 @@
+/* Purchase.css */
+.purchase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.purchase-tabs {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  margin-right: 100px;
+}
+
+.purchase-table-container {
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+
+.top-header{
+  border-bottom: 1px solid #e0e0e0;
+}
+
