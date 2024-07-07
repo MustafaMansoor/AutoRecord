@@ -38,8 +38,6 @@ const Purchase = () => {
     navigate(`/purchases/${companyId}/view`, { state: { purchase } });
   };
 
-  console.log("Purchase Component - tabValue:", tabValue);
-  console.log("Purchase Component - filteredPurchases:", filteredPurchases);
 
   return (
     <div>

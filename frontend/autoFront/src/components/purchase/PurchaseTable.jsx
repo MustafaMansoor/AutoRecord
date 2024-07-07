@@ -12,8 +12,7 @@ import {
 import './Purchase.css';
 
 const PurchaseTable = ({ purchases, handleClickOpen, tabValue }) => {
-  console.log("PurchaseTable Component - tabValue:", tabValue);
-  console.log("PurchaseTable Component - purchases:", purchases);
+  
 
   return (
     <TableContainer
