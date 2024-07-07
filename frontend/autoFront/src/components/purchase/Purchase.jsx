@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   Table,
   TableBody,
@@ -23,28 +22,15 @@ import PendingIcon from "@mui/icons-material/HourglassEmpty";
 import RejectedIcon from "@mui/icons-material/Cancel";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./Purchase.css";
+import useFetchPurchases from './customHooks/useFetchPurchases';
+import useNavigationHandlers from './customHooks/useNavigationHandlers';
 
 const Purchase = () => {
-  const [purchases, setPurchases] = useState([]);
-  const [tabValue, setTabValue] = useState("pending"); // Default to "Processing"
   const { companyId } = useParams();
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/companies/${companyId}/purchases`)
-      .then((response) => {
-        if (response.data && Array.isArray(response.data.purchases)) {
-          setPurchases(response.data.purchases);
-        } else {
-          console.error("Unexpected response data:", response.data);
-        }
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the purchases!", error);
-      });
-  }, [companyId]);
+  const { purchases, loading, error } = useFetchPurchases(companyId);
+  const { handleMenuClick, handleMenuClose, anchorEl } = useNavigationHandlers();
+  const [tabValue, setTabValue] = useState("pending");
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -58,21 +44,6 @@ const Purchase = () => {
     navigate(`/purchases/${companyId}/view`, { state: { purchase } });
   };
 
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = (path) => {
-    setAnchorEl(null);
-    if (path) {
-      navigate(path);
-    }
-  };
-
-  // Navigate to Purchases by default
-  useEffect(() => {
-    navigate(`/purchases/${companyId}`);
-  }, [companyId, navigate]);
 
   return (
     <div>
@@ -116,6 +87,7 @@ const Purchase = () => {
               </MenuItem>
             </Menu>
           </Box>
+          
           <Box className="purchase-tabs">
             <Tabs
               value={tabValue}
@@ -158,6 +130,7 @@ const Purchase = () => {
               />
             </Tabs>
           </Box>
+
         </Box>
       </div>
 
@@ -202,7 +175,19 @@ const Purchase = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredPurchases.length === 0 ? (
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={10} align="center">
+                  Loading...
+                </TableCell>
+              </TableRow>
+            ) : error ? (
+              <TableRow>
+                <TableCell colSpan={10} align="center">
+                  Error fetching data
+                </TableCell>
+              </TableRow>
+            ) : filteredPurchases.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={10} align="center">
                   No data available
