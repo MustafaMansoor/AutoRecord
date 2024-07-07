@@ -18,8 +18,12 @@
   margin-right: 20px;
 }
 
-
-.top-header{
+.top-header {
   border-bottom: 1px solid #e0e0e0;
 }
 
+.MyBoldArrowBackIcon {
+  /* Make it bold */
+  font-weight: bolder;
+  font-size: 12px;
+}
