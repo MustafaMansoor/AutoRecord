@@ -1,31 +1,34 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  Button,
   Tabs,
   Tab,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
+  Box
 } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import InboxIcon from "@mui/icons-material/Inbox";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import PendingIcon from "@mui/icons-material/HourglassEmpty";
 import RejectedIcon from "@mui/icons-material/Cancel";
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 16418647a543fe68fe9f7b14e2246a03a18b6f26
+>>>>>>> Stashed changes
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+>>>>>>> 16418647a543fe68fe9f7b14e2246a03a18b6f26
 import "./Purchase.css";
 import useFetchPurchases from './customHooks/useFetchPurchases';
-import useNavigationHandlers from './customHooks/useNavigationHandlers';
 import PurchaseTable from './PurchaseTable';
+import NavigationTabs from "./NavigationTabs";
 
 const Purchase = () => {
   const { companyId } = useParams();
   const navigate = useNavigate();
   const { purchases } = useFetchPurchases(companyId);
-  const { handleMenuClick, handleMenuClose, anchorEl } = useNavigationHandlers();
   const [tabValue, setTabValue] = useState("pending");
 
   const handleTabChange = (event, newValue) => {
@@ -44,6 +47,9 @@ const Purchase = () => {
     <div>
       <div className="top-header">
         <Box className="purchase-header">
+<<<<<<< HEAD
+          <NavigationTabs  ele = {["purchases","sales","suppliers"]} companyId={companyId}/>
+=======
           <Box className="purchase-header-left">
             <IconButton onClick={() => navigate(-1)}>
               <ArrowBackIcon className="MyBoldArrowBackIcon" />
@@ -83,6 +89,7 @@ const Purchase = () => {
             </Menu>
           </Box>
           
+>>>>>>> 16418647a543fe68fe9f7b14e2246a03a18b6f26
           <Box className="purchase-tabs">
             <Tabs
               value={tabValue}
@@ -91,10 +98,10 @@ const Purchase = () => {
               indicatorColor="secondary"
               sx={{
                 "& .MuiTab-root": {
-                  color: "rgba(0, 0, 0, 0.6)", // Default color for inactive tabs
+                  color: "rgba(0, 0, 0, 0.6)",
                   paddingTop: 0,
                   paddingBottom: 0,
-                  minHeight: "45px", // Set the minimum height
+                  minHeight: "45px", 
                   height: "45px", // Set the fixed height
                 },
                 "& .Mui-selected": {
