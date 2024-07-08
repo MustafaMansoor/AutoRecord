@@ -11,8 +11,10 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import InboxIcon from "@mui/icons-material/Inbox";
+import ScheduleIcon from "@mui/icons-material/Schedule";
 import PendingIcon from "@mui/icons-material/HourglassEmpty";
 import RejectedIcon from "@mui/icons-material/Cancel";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./Purchase.css";
 import useFetchPurchases from './customHooks/useFetchPurchases';
@@ -112,7 +114,7 @@ const Purchase = () => {
               <Tab
                 label="Processing"
                 value="pending"
-                icon={<PendingIcon />}
+                icon={<ScheduleIcon />}
                 iconPosition="start"
               />
               <Tab
@@ -126,7 +128,7 @@ const Purchase = () => {
 
         </Box>
       </div>
-      <PurchaseTable purchases={filteredPurchases} handleClickOpen={handleClickOpen} tabValue={tabValue} />
+      <PurchaseTable className="table" purchases={filteredPurchases} handleClickOpen={handleClickOpen} tabValue={tabValue} />
     </div>
   );
 };

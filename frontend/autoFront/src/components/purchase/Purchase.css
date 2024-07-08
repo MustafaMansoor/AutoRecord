@@ -23,7 +23,6 @@
 }
 
 .MyBoldArrowBackIcon {
-  /* Make it bold */
   font-weight: bolder;
   font-size: 12px;
 }
@@ -35,4 +34,8 @@
 
 .menuContainer .menuItem {
   color: #597C26;
+}
+
+.table{
+  width: 90%;
 }
