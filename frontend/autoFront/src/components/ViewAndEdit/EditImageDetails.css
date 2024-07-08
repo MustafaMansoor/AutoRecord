@@ -17,6 +17,7 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+
 .edit-page-footer {
   border-top: 1px solid #ccc;
   flex: 0.15;
@@ -26,12 +27,12 @@
 .edit-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 5px;
 }
 
 .form-row {
   display: flex;
-  width: 100%;
+  width: 95%;
   gap: 20px;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./EditImageDetails.css";
 import CustomButton from "../dashboard/Button";
@@ -6,10 +6,29 @@ import HollowTickIcon from "@mui/icons-material/CheckCircleOutline";
 import HollowExclamationTriangleIcon from "@mui/icons-material/WarningAmberOutlined";
 import ArchiveIcon from "@mui/icons-material/Archive";
 
+const vatOptions = [
+  { label: "Sales Standard Rated - 20%", value: "20" },
+  { label: "Sales Zero Rated - 0%", value: "0" },
+  { label: "Sales C&S Sports - 5%", value: "5" },
+];
+
 function EditImageDetails({ data }) {
   const [formData, setFormData] = useState(data);
-  const { companyId} = useParams();
+  const { companyId } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const vatPercentage = (formData.vat / formData.net) * 100;
+    const matchedOption = vatOptions.find(
+      (option) => parseFloat(option.value) === vatPercentage
+    );
+    if (matchedOption) {
+      setFormData((prevData) => ({
+        ...prevData,
+        vatCode: matchedOption.value,
+      }));
+    }
+  }, [formData.vat, formData.net]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,13 +40,16 @@ function EditImageDetails({ data }) {
     const purchaseId = formData._id;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/companies/${companyId}/purchases/${purchaseId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData)
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/companies/${companyId}/purchases/${purchaseId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        }
+      );
 
       if (response.ok) {
         navigate(-1);
@@ -71,23 +93,15 @@ function EditImageDetails({ data }) {
           </div>
           <div className="form-row">
             <div className="form-group">
-              <label>Category</label>
+              <label>Invoice Number</label>
               <input
                 type="text"
-                name="category"
-                value={formData.category}
+                name="invoiceNumber"
+                value={formData.invoiceNumber}
                 onChange={handleInputChange}
               />
             </div>
-            <div className="form-group">
-              <label>Date</label>
-              <input
-                type="date"
-                name="date"
-                value={formatDate(formData.date)}
-                onChange={handleInputChange}
-              />
-            </div>
+
             <div className="form-group">
               <label>Due Date</label>
               <input
@@ -105,6 +119,28 @@ function EditImageDetails({ data }) {
                 type="text"
                 name="description"
                 value={formData.description}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Category</label>
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Currency</label>
+              <input
+                type="text"
+                name="currency"
+                value={formData.currency}
                 onChange={handleInputChange}
               />
             </div>
@@ -133,12 +169,17 @@ function EditImageDetails({ data }) {
           <div className="form-row">
             <div className="form-group">
               <label>VAT Code</label>
-              <input
-                type="text"
+              <select
                 name="vatCode"
                 value={formData.vatCode}
                 onChange={handleInputChange}
-              />
+              >
+                {vatOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="form-group">
               <label>Total</label>
