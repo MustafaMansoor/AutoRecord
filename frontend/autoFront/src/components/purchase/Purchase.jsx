@@ -38,7 +38,6 @@ const Purchase = () => {
     navigate(`/purchases/${companyId}/view`, { state: { purchase } });
   };
 
-
   return (
     <div>
       <div className="top-header">
@@ -50,7 +49,7 @@ const Purchase = () => {
             <Button
               onClick={handleMenuClick}
               className="purchase-menu-button"
-              sf={{ fontWeight: "bold", color: "#597C26" }}
+              style={{ fontWeight: "bold", color: "#597C26" }}
               endIcon={<ArrowDropDownIcon />}
             >
               Purchases
@@ -97,10 +96,10 @@ const Purchase = () => {
                   height: "45px", // Set the fixed height
                 },
                 "& .Mui-selected": {
-                  color: "#84B048", 
+                  color: "#597C26", 
                 },
                 "& .MuiTabs-indicator": {
-                  backgroundColor: "#84B048", 
+                  backgroundColor: "#597C26", 
                 },
               }}
             >

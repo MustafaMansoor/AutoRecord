@@ -27,3 +27,12 @@
   font-weight: bolder;
   font-size: 12px;
 }
+
+.purchase-menu-button {
+  font-weight: bold;
+  color: #597C26;
+}
+
+.menuContainer .menuItem {
+  color: #597C26;
+}
