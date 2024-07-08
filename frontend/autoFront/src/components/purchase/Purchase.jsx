@@ -7,19 +7,7 @@ import {
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import ScheduleIcon from "@mui/icons-material/Schedule";
-import PendingIcon from "@mui/icons-material/HourglassEmpty";
 import RejectedIcon from "@mui/icons-material/Cancel";
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 16418647a543fe68fe9f7b14e2246a03a18b6f26
->>>>>>> Stashed changes
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
->>>>>>> 16418647a543fe68fe9f7b14e2246a03a18b6f26
 import "./Purchase.css";
 import useFetchPurchases from './customHooks/useFetchPurchases';
 import PurchaseTable from './PurchaseTable';
@@ -47,49 +35,7 @@ const Purchase = () => {
     <div>
       <div className="top-header">
         <Box className="purchase-header">
-<<<<<<< HEAD
-          <NavigationTabs  ele = {["purchases","sales","suppliers"]} companyId={companyId}/>
-=======
-          <Box className="purchase-header-left">
-            <IconButton onClick={() => navigate(-1)}>
-              <ArrowBackIcon className="MyBoldArrowBackIcon" />
-            </IconButton>
-            <Button
-              onClick={handleMenuClick}
-              className="purchase-menu-button"
-              style={{ fontWeight: "bold", color: "#597C26" }}
-              endIcon={<ArrowDropDownIcon />}
-            >
-              Purchases
-            </Button>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={() => handleMenuClose()}
-              className="menuContainer"
-            >
-              <MenuItem
-                className="menuItem"
-                onClick={() => handleMenuClose(`/purchases/${companyId}`)}
-              >
-                Purchases
-              </MenuItem>
-              <MenuItem
-                className="menuItem"
-                onClick={() => handleMenuClose(`/sales/${companyId}`)}
-              >
-                Sales
-              </MenuItem>
-              <MenuItem
-                className="menuItem"
-                onClick={() => handleMenuClose(`/suppliers/${companyId}`)}
-              >
-                Suppliers
-              </MenuItem>
-            </Menu>
-          </Box>
-          
->>>>>>> 16418647a543fe68fe9f7b14e2246a03a18b6f26
+          <NavigationTabs  ele = {["purchases","sales","suppliers"]} companyId={companyId}/>          
           <Box className="purchase-tabs">
             <Tabs
               value={tabValue}
