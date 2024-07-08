@@ -6,12 +6,13 @@ import {
   Box
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
-import ScheduleIcon from "@mui/icons-material/Schedule";
+import PendingIcon from "@mui/icons-material/HourglassEmpty";
 import RejectedIcon from "@mui/icons-material/Cancel";
 import "./Purchase.css";
 import useFetchPurchases from './customHooks/useFetchPurchases';
+import useNavigationHandlers from './customHooks/useNavigationHandlers';
 import PurchaseTable from './PurchaseTable';
-import NavigationTabs from "./NavigationTabs";
+import NavigationTabs from './NavigationTabs';
 
 const Purchase = () => {
   const { companyId } = useParams();
@@ -31,11 +32,12 @@ const Purchase = () => {
     navigate(`/purchases/${companyId}/view`, { state: { purchase } });
   };
 
+
   return (
     <div>
       <div className="top-header">
         <Box className="purchase-header">
-          <NavigationTabs  ele = {["purchases","sales","suppliers"]} companyId={companyId}/>          
+          <NavigationTabs  ele = {["purchases","sales","suppliers"]}companyId={companyId} />
           <Box className="purchase-tabs">
             <Tabs
               value={tabValue}
@@ -44,17 +46,17 @@ const Purchase = () => {
               indicatorColor="secondary"
               sx={{
                 "& .MuiTab-root": {
-                  color: "rgba(0, 0, 0, 0.6)",
+                  color: "rgba(0, 0, 0, 0.6)", // Default color for inactive tabs
                   paddingTop: 0,
                   paddingBottom: 0,
-                  minHeight: "45px", 
+                  minHeight: "45px", // Set the minimum height
                   height: "45px", // Set the fixed height
                 },
                 "& .Mui-selected": {
-                  color: "#597C26", 
+                  color: "#84B048", 
                 },
                 "& .MuiTabs-indicator": {
-                  backgroundColor: "#597C26", 
+                  backgroundColor: "#84B048", 
                 },
               }}
             >
@@ -67,7 +69,7 @@ const Purchase = () => {
               <Tab
                 label="Processing"
                 value="pending"
-                icon={<ScheduleIcon />}
+                icon={<PendingIcon />}
                 iconPosition="start"
               />
               <Tab
@@ -81,7 +83,7 @@ const Purchase = () => {
 
         </Box>
       </div>
-      <PurchaseTable className="table" purchases={filteredPurchases} handleClickOpen={handleClickOpen} tabValue={tabValue} />
+      <PurchaseTable purchases={filteredPurchases} handleClickOpen={handleClickOpen} tabValue={tabValue} />
     </div>
   );
 };

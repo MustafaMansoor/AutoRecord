@@ -23,10 +23,10 @@ function NavigationTabs({ ele,companyId}) {
             <Button
               onClick={handleMenuClick}
               className="purchase-menu-button"
-              style={{ fontWeight: "bold", color: "#597C26" }}
+              sf={{ fontWeight: "bold", color: "#597C26" }}
               endIcon={<ArrowDropDownIcon />}
             >
-               {ele[0]}
+              {ele[0]}
             </Button>
             <Menu
               anchorEl={anchorEl}
@@ -38,19 +38,19 @@ function NavigationTabs({ ele,companyId}) {
                 className="menuItem"
                 onClick={() => handleMenuClose(`/${ele[0]}/${companyId}`)}
               >
-                 {ele[0]}
+                {ele[0]}
               </MenuItem>
               <MenuItem
                 className="menuItem"
                 onClick={() => handleMenuClose(`/${ele[1]}/${companyId}`)}
               >
-                 {ele[1]}
+                {ele[1]}
               </MenuItem>
               <MenuItem
                 className="menuItem"
                 onClick={() => handleMenuClose(`/${ele[2]}/${companyId}`)}
               >
-                 {ele[2]}
+                {ele[2]}
               </MenuItem>
             </Menu>
           </Box>
