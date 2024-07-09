@@ -18,7 +18,7 @@ const PurchaseTable = ({ purchases, handleClickOpen, tabValue }) => {
     <TableContainer
       component={Paper}
       className="purchase-table-container"
-      sx={{ border: "1px solid #ccc", marginTop: "20px" }}
+      sx={{ border: "1px solid #ccc", marginTop: "20px" , width: "98%",display: "block", marginLeft: "auto", marginRight: "auto"}}
     >
       <Table sx={{ minWidth: 650 }} aria-label="purchases table">
         <TableHead sx={{ backgroundColor: "#f5f5f5" }}>

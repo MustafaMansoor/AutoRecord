@@ -39,3 +39,13 @@
 .table{
   width: 90%;
 }
+
+.purchase-menu-button {
+  font-weight: bolder !important;
+  color: #597C26 !important;
+}
+
+.MyBoldArrowBackIcon {
+  font-weight: bolder !important;
+  color: #597C26 !important;
+}

@@ -12,6 +12,7 @@ import "./Purchase.css";
 import useFetchPurchases from './customHooks/useFetchPurchases';
 import PurchaseTable from './PurchaseTable';
 import NavigationTabs from './NavigationTabs';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const Purchase = () => {
   const { companyId } = useParams();
@@ -68,7 +69,7 @@ const Purchase = () => {
               <Tab
                 label="Processing"
                 value="pending"
-                icon={<PendingIcon />}
+                icon={<AccessTimeIcon />}
                 iconPosition="start"
               />
               <Tab
