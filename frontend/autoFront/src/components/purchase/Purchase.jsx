@@ -10,7 +10,6 @@ import PendingIcon from "@mui/icons-material/HourglassEmpty";
 import RejectedIcon from "@mui/icons-material/Cancel";
 import "./Purchase.css";
 import useFetchPurchases from './customHooks/useFetchPurchases';
-import useNavigationHandlers from './customHooks/useNavigationHandlers';
 import PurchaseTable from './PurchaseTable';
 import NavigationTabs from './NavigationTabs';
 
@@ -42,11 +41,11 @@ const Purchase = () => {
             <Tabs
               value={tabValue}
               onChange={handleTabChange}
-              textColor="secondary"
+              textColor=""
               indicatorColor="secondary"
               sx={{
                 "& .MuiTab-root": {
-                  color: "rgba(0, 0, 0, 0.6)", // Default color for inactive tabs
+                  
                   paddingTop: 0,
                   paddingBottom: 0,
                   minHeight: "45px", // Set the minimum height

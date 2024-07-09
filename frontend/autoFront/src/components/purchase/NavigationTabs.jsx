@@ -2,6 +2,7 @@ import React from 'react';
 import useNavigationHandlers from './customHooks/useNavigationHandlers';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from 'react-router-dom';
 import {
     Button,
     Box,
@@ -11,6 +12,7 @@ import {
 } from "@mui/material";
 
 function NavigationTabs({ ele,companyId}) {
+  const navigate = useNavigate();
   const { handleMenuClick, handleMenuClose, anchorEl } = useNavigationHandlers();
 
 
