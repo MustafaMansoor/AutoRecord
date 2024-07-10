@@ -17,7 +17,7 @@ import {
 
 const Sales = () => {
   const [sales, setSales] = useState([]);
-  const [tabValue, setTabValue] = useState('pending'); // Default to "Processing"
+  const [tabValue, setTabValue] = useState('pending');
   const { companyId } = useParams(); 
 
   useEffect(() => {

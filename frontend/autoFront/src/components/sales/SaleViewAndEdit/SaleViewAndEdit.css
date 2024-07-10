@@ -1,0 +1,23 @@
+.SaleEditAndView-container {
+    display: flex;
+    flex-direction: row; /* Ensure cards are laid out horizontally */
+    width: 100%; /* Full width of the viewport */
+    margin: 0; /* Ensure there's no additional margin */
+    padding: 0;
+    gap: 5px;
+  }
+  
+  .SaleEditAndView-container-first {
+    flex: 1;
+    height: 100vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0;
+  }
+  .SaleEditAndView-container-second {
+    flex: 0.8;
+    height: 100vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    overflow: hidden;
+  }
+  

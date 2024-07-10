@@ -8,7 +8,8 @@ import Purchases from "./components/purchase/Purchase";
 import Sales from "./components/sales/Sales";
 import Supplier from "./components/suppliers/Supplier";
 import Folders from "./components/folders/Folders";
-import EditAndViewPage from "./components/ViewAndEdit/EditAndViewPage";
+import EditAndViewPage from "./components/purchase/ViewAndEdit/EditAndViewPage";
+import SaleEditAndView from "./components/sales/SaleViewAndEdit/SaleEditAndView";
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
               />
 
               <Route path="/sales/:companyId" element={<Sales />} />
+              <Route path="/sales/:companyId/View" element={<SaleEditAndView />} />
+
               <Route path="/suppliers/:companyId" element={<Supplier />} />
 
               {/* Add routes for new sidebar items */}

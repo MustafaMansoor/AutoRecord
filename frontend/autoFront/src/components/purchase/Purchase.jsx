@@ -17,7 +17,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 const Purchase = () => {
   const { companyId } = useParams();
   const navigate = useNavigate();
-  const { purchases } = useFetchPurchases(companyId);
+  const { purchases } = useFetchPurchases(companyId,"purchases");
   const [tabValue, setTabValue] = useState("pending");
 
   const handleTabChange = (event, newValue) => {
@@ -80,7 +80,6 @@ const Purchase = () => {
               />
             </Tabs>
           </Box>
-
         </Box>
       </div>
       <PurchaseTable purchases={filteredPurchases} handleClickOpen={handleClickOpen} tabValue={tabValue} />
