@@ -1,0 +1,23 @@
+.SupplierEditAndView-container {
+    display: flex;
+    flex-direction: row; 
+    width: 100%; 
+    margin: 0;
+    padding: 0;
+    gap: 5px;
+  }
+  
+  .SupplierEditAndView-container-first {
+    flex: 1;
+    height: 100vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0;
+  }
+  .SupplierEditAndView-container-second {
+    flex: 0.8;
+    height: 100vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    overflow: hidden;
+  }
+  

@@ -10,6 +10,7 @@ import Supplier from "./components/suppliers/Supplier";
 import Folders from "./components/folders/Folders";
 import PurchaseEditAndViewPage from "./components/purchase/PurchaseViewAndEdit/PurchaseEditAndViewPage";
 import SaleEditAndView from "./components/sales/SaleViewAndEdit/SaleEditAndView";
+import SupplierEditAndView from "./components/suppliers/SupplierViewAndEdit/SupplierEditAndView";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
               <Route path="/sales/:companyId/View" element={<SaleEditAndView />} />
 
               <Route path="/suppliers/:companyId" element={<Supplier />} />
+              
+              <Route path="/suppliers/:companyId/View" element={<SupplierEditAndView />} />
 
               {/* Add routes for new sidebar items */}
               <Route path="/people" element={<div>People Page</div>} />

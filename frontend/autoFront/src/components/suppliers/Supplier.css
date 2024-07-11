@@ -1,0 +1,52 @@
+/* supplier.css */
+.supplier-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .supplier-tabs {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    margin-right: 100px;
+  }
+  
+  .supplier-table-container {
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+  
+  .top-header {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .MyBoldArrowBackIcon {
+    font-weight: bolder;
+    font-size: 12px;
+  }
+  
+  .supplier-menu-button {
+    font-weight: bold;
+    color: #597C26;
+  }
+  
+  .menuContainer .menuItem {
+    color: #597C26;
+  }
+  
+  .table{
+    width: 90%;
+  }
+  
+  .supplier-menu-button {
+    font-weight: bolder !important;
+    color: #597C26 !important;
+  }
+  
+  .MyBoldArrowBackIcon {
+    font-weight: bolder !important;
+    color: #597C26 !important;
+  }
+  
