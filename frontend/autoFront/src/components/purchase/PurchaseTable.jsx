@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate,useParams } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -11,8 +12,12 @@ import {
 } from '@mui/material';
 import './Purchase.css';
 
-const PurchaseTable = ({ purchases, handleClickOpen, tabValue }) => {
-  
+const PurchaseTable = ({ purchases , tabValue }) => {
+  const { companyId } = useParams();
+  const navigate = useNavigate();
+  const handleClickOpen = (purchase) => {
+    navigate(`/purchases/${companyId}/view`, { state: { purchase } });
+  };
 
   return (
     <TableContainer

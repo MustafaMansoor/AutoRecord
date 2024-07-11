@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   Tabs,
   Tab,
   Box
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
-import PendingIcon from "@mui/icons-material/HourglassEmpty";
 import RejectedIcon from "@mui/icons-material/Cancel";
 import "./Purchase.css";
 import useFetchPurchases from './customHooks/useFetchPurchases';
@@ -16,7 +15,6 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const Purchase = () => {
   const { companyId } = useParams();
-  const navigate = useNavigate();
   const { purchases } = useFetchPurchases(companyId,"purchases");
   const [tabValue, setTabValue] = useState("pending");
 
@@ -28,9 +26,6 @@ const Purchase = () => {
     (purchase) => purchase.status === tabValue
   );
 
-  const handleClickOpen = (purchase) => {
-    navigate(`/purchases/${companyId}/view`, { state: { purchase } });
-  };
 
 
   return (
@@ -82,7 +77,7 @@ const Purchase = () => {
           </Box>
         </Box>
       </div>
-      <PurchaseTable purchases={filteredPurchases} handleClickOpen={handleClickOpen} tabValue={tabValue} />
+      <PurchaseTable purchases={filteredPurchases} tabValue={tabValue} />
     </div>
   );
 };

@@ -1,38 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  Tabs,
-  Tab,
-  Box,
-} from '@mui/material';
+import useFetchSales from './customHooks/useFetchSales';
+import SaleTable from './SalesTable';
+import { Box, Tab, Tabs } from '@mui/material';
+import InboxIcon from '@mui/icons-material/Inbox';
+import RejectedIcon from '@mui/icons-material/Cancel';
+import NavigationTabs from '../purchase/NavigationTabs';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const Sales = () => {
-  const [sales, setSales] = useState([]);
   const [tabValue, setTabValue] = useState('pending');
   const { companyId } = useParams(); 
-
-  useEffect(() => {
-    axios.get(`http://localhost:3000/api/companies/${companyId}/sales`)
-      .then(response => {
-        if (response.data && Array.isArray(response.data.sales)) {
-          setSales(response.data.sales);
-        } else {
-          console.error('Unexpected response data:', response.data);
-        }
-      })
-      .catch(error => {
-        console.error('There was an error fetching the sales!', error);
-      });
-  }, [companyId]);
+const { sales } = useFetchSales(companyId);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -42,58 +21,55 @@ const Sales = () => {
 
   return (
     <div>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={tabValue} onChange={handleTabChange}>
-          <Tab label="Inbox" value="inbox" />
-          <Tab label="Processing" value="pending" />
-          <Tab label="Rejected" value="rejected" />
-        </Tabs>
+    <div className="top-header">
+      <Box className="sale-header">
+        <NavigationTabs  ele = {["sales","purchases","suppliers"]}companyId={companyId} />
+        <Box className="sale-tabs">
+          <Tabs
+            value={tabValue}
+            onChange={handleTabChange}
+            textColor=""
+            indicatorColor="secondary"
+            sx={{
+              "& .MuiTab-root": {
+                
+                paddingTop: 0,
+                paddingBottom: 0,
+                minHeight: "45px", // Set the minimum height
+                height: "45px", // Set the fixed height
+              },
+              "& .Mui-selected": {
+                color: "#84B048", 
+              },
+              "& .MuiTabs-indicator": {
+                backgroundColor: "#84B048", 
+              },
+            }}
+          >
+            <Tab
+              label="Inbox"
+              value="inbox"
+              icon={<InboxIcon />}
+              iconPosition="start"
+            />
+            <Tab
+              label="Processing"
+              value="pending"
+              icon={<AccessTimeIcon />}
+              iconPosition="start"
+            />
+            <Tab
+              label="Rejected"
+              value="rejected"
+              icon={<RejectedIcon />}
+              iconPosition="start"
+            />
+          </Tabs>
+        </Box>
       </Box>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell><b>View</b></TableCell>
-              <TableCell><b>Invoice Number</b></TableCell>
-              <TableCell><b>Date</b></TableCell>
-              <TableCell><b>Customer Name</b></TableCell>
-              <TableCell><b>Customer Account</b></TableCell>
-              <TableCell><b>Category</b></TableCell>
-              <TableCell><b>VAT Code</b></TableCell>
-              <TableCell><b>Currency</b></TableCell>
-              <TableCell><b>Net</b></TableCell>
-              <TableCell><b>VAT</b></TableCell>
-              <TableCell><b>Total</b></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredSales.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={11} align="center">
-                  No data available
-                </TableCell>
-              </TableRow>
-            ) : (
-              filteredSales.map((sale, index) => (
-                <TableRow key={index}>
-                  <TableCell><Button variant="contained">View</Button></TableCell>
-                  <TableCell>{sale.invoiceNumber || ''}</TableCell>
-                  <TableCell>{new Date(sale.date).toLocaleDateString() || ''}</TableCell>
-                  <TableCell>{sale.customerName || ''}</TableCell>
-                  <TableCell>{sale.customerAccount || ''}</TableCell>
-                  <TableCell>{sale.category || ''}</TableCell>
-                  <TableCell>{sale.vatCode || ''}</TableCell>
-                  <TableCell>{sale.currency || ''}</TableCell>
-                  <TableCell>{sale.net || ''}</TableCell>
-                  <TableCell>{sale.vat || ''}</TableCell>
-                  <TableCell>{sale.total || ''}</TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
     </div>
+    <SaleTable sales={filteredSales} tabValue={tabValue} />
+  </div>
   );
 };
 
