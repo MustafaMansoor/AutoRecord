@@ -8,7 +8,7 @@ import Purchases from "./components/purchase/Purchase";
 import Sales from "./components/sales/Sales";
 import Supplier from "./components/suppliers/Supplier";
 import Folders from "./components/folders/Folders";
-import EditAndViewPage from "./components/purchase/ViewAndEdit/EditAndViewPage";
+import PurchaseEditAndViewPage from "./components/purchase/PurchaseViewAndEdit/PurchaseEditAndViewPage";
 import SaleEditAndView from "./components/sales/SaleViewAndEdit/SaleEditAndView";
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
               <Route path="/purchases/:companyId" element={<Purchases />} />
               <Route
                 path="/purchases/:companyId/View"
-                element={<EditAndViewPage />}
+                element={<PurchaseEditAndViewPage />}
               />
 
               <Route path="/sales/:companyId" element={<Sales />} />

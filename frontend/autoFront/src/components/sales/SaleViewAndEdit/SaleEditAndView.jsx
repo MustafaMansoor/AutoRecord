@@ -1,6 +1,7 @@
 import "./SaleViewAndEdit.css";
 import { useLocation } from "react-router-dom";
-import ViewImage from "../../purchase/ViewAndEdit/ViewImage";
+import ViewImage from "../../purchase/PurchaseViewAndEdit/ViewImage";
+import EditSaleImageDetail from "./EditSaleImageDetail";
 
 function SaleEditAndView() {
   const location = useLocation();
@@ -13,7 +14,7 @@ function SaleEditAndView() {
   return (
     <div className="SaleEditAndView-container">
       <div className="SaleEditAndView-container-first">
-        
+        <EditSaleImageDetail data={sale} />
       </div>
       <div className="SaleEditAndView-container-second">
         <ViewImage URL={sale.imageURL} />

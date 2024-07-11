@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditImageDetails.css";
+import "./PurchaseEditImageDetails.css";
 import CustomButton from "../../dashboard/Button";
 import HollowTickIcon from "@mui/icons-material/CheckCircleOutline";
 import HollowExclamationTriangleIcon from "@mui/icons-material/WarningAmberOutlined";

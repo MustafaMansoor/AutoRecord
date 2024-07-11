@@ -1,9 +1,9 @@
-import "./EditAndViewPage.css";
+import "./PurchaseEditAndViewPage.css";
 import { useLocation } from "react-router-dom";
 import ViewImage from "./ViewImage";
-import EditImageDetails from "./EditImageDetails";
+import EditImageDetails from "./PurchaseEditImageDetails";
 
-function EditAndViewPage() {
+function PurchaseEditAndViewPage() {
   const location = useLocation();
   const { purchase } = location.state || {};
 
@@ -23,4 +23,4 @@ function EditAndViewPage() {
   );
 }
 
-export default EditAndViewPage;
+export default PurchaseEditAndViewPage;
