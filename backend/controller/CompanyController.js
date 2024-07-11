@@ -553,6 +553,98 @@ const getAllFoldersByCompany = async (req, res) => {
   }
 };
 
+
+const deletePurchaseForCompany = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const { companyId, purchaseId } = req.params;
+
+    // Delete the purchase
+    const deletedPurchase = await Purchase.findByIdAndDelete(purchaseId).session(session);
+
+    if (!deletedPurchase) {
+      throw new Error("Purchase not found");
+    }
+
+    // Remove the purchase reference from the company
+    await Company.findByIdAndUpdate(companyId, {
+      $pull: { purchases: purchaseId }
+    }).session(session);
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({ deletedPurchase });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Error deleting purchase for company:", error);
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
+  }
+};
+
+const deleteSaleForCompany = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const { companyId, saleId } = req.params;
+
+    // Delete the sale
+    const deletedSale = await Sale.findByIdAndDelete(saleId).session(session);
+
+    if (!deletedSale) {
+      throw new Error("Sale not found");
+    }
+
+    // Optionally, remove the sale reference from the company if needed
+    await Company.findByIdAndUpdate(companyId, {
+      $pull: { sales: saleId }
+    }).session(session);
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({ deletedSale });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Error deleting sale for company:", error);
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
+  }
+};
+
+const deleteSupplierForCompany = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const { companyId, supplierId } = req.params;
+
+    // Delete the supplier
+    const deletedSupplier = await Supplier.findByIdAndDelete(supplierId).session(session);
+
+    if (!deletedSupplier) {
+      throw new Error("Supplier not found");
+    }
+
+    // Optionally, remove the supplier reference from the company if needed
+    await Company.findByIdAndUpdate(companyId, {
+      $pull: { suppliers: supplierId }
+    }).session(session);
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({ deletedSupplier });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Error deleting supplier for company:", error);
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
+  }
+};
+
+
 module.exports = {
   createCompany,
   getAllCompanies,
@@ -568,5 +660,8 @@ module.exports = {
   getAllFoldersByCompany,
   editPurchaseForCompany,
   editSaleForCompany,
-  editSupplierForCompany
+  editSupplierForCompany,
+  deletePurchaseForCompany,
+  deleteSaleForCompany,
+  deleteSupplierForCompany
 };

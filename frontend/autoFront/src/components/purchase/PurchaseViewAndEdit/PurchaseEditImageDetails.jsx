@@ -5,6 +5,7 @@ import CustomButton from "../../dashboard/Button";
 import HollowTickIcon from "@mui/icons-material/CheckCircleOutline";
 import HollowExclamationTriangleIcon from "@mui/icons-material/WarningAmberOutlined";
 import ArchiveIcon from "@mui/icons-material/Archive";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const vatOptions = [
   { label: "Sales Standard Rated - 20%", value: "20" },
@@ -56,6 +57,27 @@ function EditImageDetails({ data }) {
       } else {
         console.error("Error:", updatedData);
         console.error("Failed to update purchase");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  async function handleDelete() {
+    const purchaseId = formData._id;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/companies/${companyId}/purchases/${purchaseId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        navigate(-1); // Navigate back after deletion
+      } else {
+        console.error("Failed to delete purchase");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -195,9 +217,9 @@ function EditImageDetails({ data }) {
       </div>
       <div className="edit-page-footer buttons">
         <CustomButton
-          icon={<ArchiveIcon />}
-          text="Archive"
-          onClick={() => handleSubmit("archived")}
+          icon={<DeleteIcon />}
+          text="Delete"
+          onClick={() => handleDelete()}
         />
         <CustomButton
           icon={<HollowExclamationTriangleIcon />}

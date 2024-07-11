@@ -15,7 +15,10 @@ const {
   getAllFoldersByCompany,
   editPurchaseForCompany,
   editSaleForCompany,
-  editSupplierForCompany
+  editSupplierForCompany,
+  deletePurchaseForCompany,
+  deleteSaleForCompany,
+  deleteSupplierForCompany
 } = require("../controller/CompanyController.js");
 
 // Routes for managing companies
@@ -42,5 +45,10 @@ router.get("/:companyId/purchases", getAllPurchasesByCompany);
 router.get("/:companyId/sales", getAllSalesByCompany);
 router.get("/:companyId/suppliers", getAllSuppliersByCompany);
 router.get("/:companyId/folders", getAllFoldersByCompany);
+
+//routes for editing purchases, sales, and suppliers for a company
+router.delete("/:companyId/purchases/:purchaseId", deletePurchaseForCompany);
+router.delete("/:companyId/sales", deleteSaleForCompany);
+router.delete("/:companyId/suppliers", deleteSupplierForCompany);
 
 module.exports = router;
