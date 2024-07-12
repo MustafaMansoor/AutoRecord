@@ -4,6 +4,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./Purchase.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+
 import {
     Button,
     Box,
@@ -21,7 +23,7 @@ function NavigationTabs({ ele,companyId}) {
     <div>
   <Box className="purchase-header-left">
     <IconButton onClick={() => navigate(-1)}>
-      <ArrowBackIcon className="MyBoldArrowBackIcon" />
+      <ArrowLeft className="MyBoldArrowBackIcon" />
     </IconButton>
     <Button
       onClick={handleMenuClick}

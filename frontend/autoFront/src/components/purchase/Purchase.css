@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+*{
+  font-family: "Inter", sans-serif;
+}
+
 /* Purchase.css */
 .purchase-header {
   display: flex;
@@ -48,4 +54,7 @@
 .MyBoldArrowBackIcon {
   font-weight: bolder !important;
   color: #597C26 !important;
+  stroke-width: 3px;
+  color: #597C26;
+  size: 48px;
 }

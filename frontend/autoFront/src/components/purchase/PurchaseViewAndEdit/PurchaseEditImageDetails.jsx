@@ -147,15 +147,6 @@ function EditImageDetails({ data }) {
           </div>
 
           <div className="form-row">
-            <div className="form-group">
-              <label>Category</label>
-              <input
-                type="text"
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-              />
-            </div>
 
             <div className="form-group">
               <label>Currency</label>

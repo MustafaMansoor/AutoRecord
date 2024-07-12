@@ -1,4 +1,5 @@
 import React from 'react'
+import "./EditSupplierImageDetail.css";
 
 function EditSupplierImageDetail({ data }) {
   return (

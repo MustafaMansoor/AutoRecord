@@ -1,3 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+*{
+  font-family: "Inter", sans-serif;
+}
+
+.top-bar{
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.status-text {
+  font-size: 16px;
+  text-transform: capitalize;
+  font-weight: bold !important;
+  color: #597C26;
+  margin-left: 5px !important;;
+}
+
+.arrow{
+  stroke-width: 3px;
+  color: #597C26;
+  size: 48px;
+}
+
 .SaleEditAndView-container {
     display: flex;
     flex-direction: row; /* Ensure cards are laid out horizontally */

@@ -2,6 +2,8 @@ import "./SaleViewAndEdit.css";
 import { useLocation } from "react-router-dom";
 import ViewImage from "../../purchase/PurchaseViewAndEdit/ViewImage";
 import EditSaleImageDetail from "./EditSaleImageDetail";
+import { Button, IconButton, Typography } from "@mui/material";
+import { ArrowLeft } from 'lucide-react';
 
 function SaleEditAndView() {
   const location = useLocation();
@@ -12,7 +14,20 @@ function SaleEditAndView() {
   }
 
   return (
-    <div className="SaleEditAndView-container">
+    <div>
+
+<div className="top-bar">
+        {/* Back Button */}
+        <IconButton onClick={() => window.history.back()} aria-label="back">
+          <ArrowLeft className="arrow"/>
+        </IconButton>
+        {/* Status Text */}
+        <Typography variant="h6" className="status-text">
+          {sale.status}
+        </Typography>
+      </div>
+
+<div className="SaleEditAndView-container">
       <div className="SaleEditAndView-container-first">
         <EditSaleImageDetail data={sale} />
       </div>
@@ -20,6 +35,10 @@ function SaleEditAndView() {
         <ViewImage URL={sale.imageURL} />
       </div>
     </div>
+
+
+    </div>
+    
   );
 }
 
