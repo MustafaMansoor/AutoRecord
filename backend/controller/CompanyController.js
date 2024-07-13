@@ -362,21 +362,22 @@ const editSaleForCompany = async (req, res) => {
     const { companyId, saleId } = req.params;
     const saleUpdates = req.body;
 
-    // Validate sale data updates
+
+    // Validate sale data updates with default values
     const validatedSaleUpdates = {
-      status: saleUpdates.status,
-      invoiceNumber: saleUpdates.invoiceNumber,
-      date: saleUpdates.date,
-      customerName: saleUpdates.customerName,
-      customerAccount: saleUpdates.customerAccount,
-      category: saleUpdates.category,
-      vatCode: saleUpdates.vatCode,
-      currency: saleUpdates.currency,
-      net: saleUpdates.net,
-      vat: saleUpdates.vat,
-      total: saleUpdates.total,
-      imageURL: saleUpdates.imageURL,
-      reason: saleUpdates.reason,
+      status: saleUpdates.status || "",
+      invoiceNumber: saleUpdates.invoiceNumber || "",
+      date: saleUpdates.date || new Date(),
+      customerName: saleUpdates.customerName || "",
+      customerAccount: saleUpdates.customerAccount || "",
+      category: saleUpdates.category || "",
+      vatCode: saleUpdates.vatCode || "",
+      currency: saleUpdates.currency || "",
+      net: saleUpdates.net || 0,
+      vat: saleUpdates.vat || 0,
+      total: saleUpdates.total || 0,
+      imageURL: saleUpdates.imageURL || "",
+      reason: saleUpdates.reason || "",
     };
 
     // Update the sale
@@ -385,6 +386,17 @@ const editSaleForCompany = async (req, res) => {
       { $set: validatedSaleUpdates },
       { new: true, session }
     );
+
+    if (!updatedSale) {
+      throw new Error("Sale not found");
+    }
+
+    // Ensure the sale belongs to the company
+    const company = await Company.findOne({ _id: companyId, sales: saleId }).session(session);
+    if (!company) {
+      throw new Error("Company not found or sale does not belong to the company");
+    }
+
     await session.commitTransaction();
     session.endSession();
 
@@ -393,9 +405,7 @@ const editSaleForCompany = async (req, res) => {
     await session.abortTransaction();
     session.endSession();
     console.error("Error editing sale for company:", error);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", details: error.message });
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 };
 
@@ -489,17 +499,17 @@ const editSupplierForCompany = async (req, res) => {
     const { companyId, supplierId } = req.params;
     const supplierUpdates = req.body;
 
-    // Validate supplier data updates
+    // Validate supplier data updates with default values
     const validatedSupplierUpdates = {
-      date: supplierUpdates.date,
-      supplierName: supplierUpdates.supplierName,
-      supplierAccount: supplierUpdates.supplierAccount,
-      currency: supplierUpdates.currency,
-      dateRange: supplierUpdates.dateRange,
-      status: supplierUpdates.status,
-      statementNumber: supplierUpdates.statementNumber,
-      imageURL: supplierUpdates.imageURL,
-      reason: supplierUpdates.reason,
+      date: supplierUpdates.date || new Date(),
+      supplierName: supplierUpdates.supplierName || "",
+      supplierAccount: supplierUpdates.supplierAccount || "",
+      currency: supplierUpdates.currency || "",
+      dateRange: supplierUpdates.dateRange || { start: new Date(), end: new Date() },
+      status: supplierUpdates.status || "",
+      statementNumber: supplierUpdates.statementNumber || "",
+      imageURL: supplierUpdates.imageURL || "",
+      reason: supplierUpdates.reason || "",
     };
 
     // Update the supplier
@@ -509,7 +519,15 @@ const editSupplierForCompany = async (req, res) => {
       { new: true, session }
     );
 
-   
+    if (!updatedSupplier) {
+      throw new Error("Supplier not found");
+    }
+
+    // Ensure the supplier belongs to the company
+    const company = await Company.findOne({ _id: companyId, suppliers: supplierId }).session(session);
+    if (!company) {
+      throw new Error("Company not found or supplier does not belong to the company");
+    }
 
     await session.commitTransaction();
     session.endSession();
@@ -519,9 +537,7 @@ const editSupplierForCompany = async (req, res) => {
     await session.abortTransaction();
     session.endSession();
     console.error("Error editing supplier for company:", error);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", details: error.message });
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 };
 

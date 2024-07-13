@@ -37,8 +37,8 @@ router.post("/:companyId/suppliers", addSupplierToCompany);
 
 //routes for editing purchases, sales, and suppliers for a company
 router.put("/:companyId/purchases/:purchaseId", editPurchaseForCompany);
-router.put("/:companyId/sales", editSaleForCompany);
-router.put("/:companyId/suppliers", editSupplierForCompany);
+router.put("/:companyId/sales/:saleId", editSaleForCompany);
+router.put("/:companyId/suppliers/:supplierId", editSupplierForCompany);
 
 // routes for getting purchases, sales, suppliers, and folders for a company
 router.get("/:companyId/purchases", getAllPurchasesByCompany);
@@ -48,7 +48,7 @@ router.get("/:companyId/folders", getAllFoldersByCompany);
 
 //routes for editing purchases, sales, and suppliers for a company
 router.delete("/:companyId/purchases/:purchaseId", deletePurchaseForCompany);
-router.delete("/:companyId/sales", deleteSaleForCompany);
-router.delete("/:companyId/suppliers", deleteSupplierForCompany);
+router.delete("/:companyId/sales/:saleId", deleteSaleForCompany);
+router.delete("/:companyId/suppliers/:supplierId", deleteSupplierForCompany);
 
 module.exports = router;
