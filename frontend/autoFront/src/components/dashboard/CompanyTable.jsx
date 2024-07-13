@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Business } from "@mui/icons-material";
 import axios from "axios";
-import Purchases from "../purchase/Purchase";
+import Purchases from "../FolderComponents/FolderComponent";
 import { useNavigate } from "react-router-dom";
 
 const CompanyTable = ({ companies }) => {
@@ -21,9 +21,11 @@ const CompanyTable = ({ companies }) => {
   const handleCompanyClick = (companyId) => {
     navigate(`/companies/${companyId}/folders`);
   };
+  
   const handlePurchase = (companyId) => {
     navigate(`/purchases/${companyId}`);
   };
+
   const handleSales = (companyId) => {
     navigate(`/sales/${companyId}`);
   };

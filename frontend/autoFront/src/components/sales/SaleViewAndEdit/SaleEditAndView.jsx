@@ -1,15 +1,15 @@
 import "./SaleViewAndEdit.css";
 import { useLocation } from "react-router-dom";
-import ViewImage from "../../purchase/PurchaseViewAndEdit/ViewImage";
+import ViewImage from "../../FolderComponents/PurchaseViewAndEdit/ViewImage";
 import EditSaleImageDetail from "./EditSaleImageDetail";
 import { Button, IconButton, Typography } from "@mui/material";
 import { ArrowLeft } from 'lucide-react';
 
 function SaleEditAndView() {
   const location = useLocation();
-  const { sale } = location.state || {};
+  const { item:sales } = location.state || {};
 
-  if (!sale) {
+  if (!sales) {
     return <div>No data available</div>;
   }
 
@@ -23,16 +23,16 @@ function SaleEditAndView() {
         </IconButton>
         {/* Status Text */}
         <Typography variant="h6" className="status-text">
-          {sale.status}
+          {sales.status}
         </Typography>
       </div>
 
 <div className="SaleEditAndView-container">
       <div className="SaleEditAndView-container-first">
-        <EditSaleImageDetail data={sale} />
+        <EditSaleImageDetail data={sales} />
       </div>
       <div className="SaleEditAndView-container-second">
-        <ViewImage URL={sale.imageURL} />
+        <ViewImage URL={sales.imageURL} />
       </div>
     </div>
 

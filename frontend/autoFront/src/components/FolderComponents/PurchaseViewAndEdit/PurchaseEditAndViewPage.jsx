@@ -7,9 +7,9 @@ import { ArrowLeft } from 'lucide-react';
 
 function PurchaseEditAndViewPage() {
   const location = useLocation();
-  const { purchase } = location.state || {};
+  const { item:purchases } = location.state || {};
 
-  if (!purchase) {
+  if (!purchases) {
     return <div>No purchase data available</div>;
   }
 
@@ -22,16 +22,16 @@ function PurchaseEditAndViewPage() {
         </IconButton>
         {/* Status Text */}
         <Typography variant="h6" className="status-text">
-          {purchase.status}
+          {purchases.status}
         </Typography>
       </div>
       
       <div className="EditAndView-container">
         <div className="EditAndView-container-first">
-          <EditImageDetails data={purchase} />
+          <EditImageDetails data={purchases} />
         </div>
         <div className="EditAndView-container-second">
-          <ViewImage URL={purchase.imageURL} />
+          <ViewImage URL={purchases.imageURL} />
         </div>
       </div>
     </div>

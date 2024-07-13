@@ -7,23 +7,23 @@ import {
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import RejectedIcon from "@mui/icons-material/Cancel";
-import "./Purchase.css";
-import useFetchPurchases from './customHooks/useFetchPurchases';
-import PurchaseTable from './PurchaseTable';
+import "./FolderComponent.css";
+import useFetchPurchases from './customHooks/useFetchData';
+import FolderTable from './FolderTable';
 import NavigationTabs from './NavigationTabs';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-const Purchase = () => {
+const FolderComponent = ({value}) => {
   const { companyId } = useParams();
-  const { purchases } = useFetchPurchases(companyId,"purchases");
+  const { data } = useFetchPurchases(companyId, value);
   const [tabValue, setTabValue] = useState("pending");
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
 
-  const filteredPurchases = purchases.filter(
-    (purchase) => purchase.status === tabValue
+  const filteredData = data.filter(
+    (val) => val.status === tabValue
   );
 
 
@@ -32,7 +32,7 @@ const Purchase = () => {
     <div>
       <div className="top-header">
         <Box className="purchase-header">
-          <NavigationTabs  ele = {["purchases","sales","suppliers"]}companyId={companyId} />
+          <NavigationTabs  ele = {[value,"purchases","sales","suppliers"]}companyId={companyId} />
           <Box className="purchase-tabs">
             <Tabs
               value={tabValue}
@@ -77,9 +77,9 @@ const Purchase = () => {
           </Box>
         </Box>
       </div>
-      <PurchaseTable purchases={filteredPurchases} tabValue={tabValue} />
+      <FolderTable data={filteredData} tabValue={tabValue}  type={value} />
     </div>
   );
 };
 
-export default Purchase;
+export default FolderComponent;

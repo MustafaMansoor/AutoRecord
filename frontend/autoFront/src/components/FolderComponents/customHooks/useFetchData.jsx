@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useFetchPurchases = (companyId,value) => {
-  const [purchases, setPurchases] = useState([]);
+const useFetchData = (companyId, value) => {
+  const [data, setData] = useState([]);
  
 
   useEffect(() => {
     axios.get(`http://localhost:3000/api/companies/${companyId}/${value}`)
       .then((response) => {
-        setPurchases(response.data.purchases);
+        setData(response.data[value]);
       }).catch((error) => {
        console.log(error);
       });
-  }, [companyId]);
+  }, [companyId, value]);
 
-  return { purchases };
+  return { data };
 };
 
-export default useFetchPurchases;
+export default useFetchData;

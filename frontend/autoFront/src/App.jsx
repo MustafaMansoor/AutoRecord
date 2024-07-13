@@ -4,11 +4,9 @@ import Sidebar from "./components/dashboard/Sidebar";
 import Topbar from "./components/dashboard/Topbar";
 import Dashboard from "./components/dashboard/Dashboard";
 import "./app.css";
-import Purchases from "./components/purchase/Purchase";
-import Sales from "./components/sales/Sales";
-import Supplier from "./components/suppliers/Supplier";
+import FolderComponent from "./components/FolderComponents/FolderComponent";
 import Folders from "./components/folders/Folders";
-import PurchaseEditAndViewPage from "./components/purchase/PurchaseViewAndEdit/PurchaseEditAndViewPage";
+import PurchaseEditAndViewPage from "./components/FolderComponents/PurchaseViewAndEdit/PurchaseEditAndViewPage";
 import SaleEditAndView from "./components/sales/SaleViewAndEdit/SaleEditAndView";
 import SupplierEditAndView from "./components/suppliers/SupplierViewAndEdit/SupplierEditAndView";
 
@@ -27,16 +25,16 @@ function App() {
                 element={<Folders />}
               />
 
-              <Route path="/purchases/:companyId" element={<Purchases />} />
+              <Route path="/purchases/:companyId" element={<FolderComponent value="purchases"/>} />
               <Route
                 path="/purchases/:companyId/View"
                 element={<PurchaseEditAndViewPage />}
               />
 
-              <Route path="/sales/:companyId" element={<Sales />} />
+              <Route path="/sales/:companyId" element={<FolderComponent value="sales" />} />
               <Route path="/sales/:companyId/View" element={<SaleEditAndView />} />
 
-              <Route path="/suppliers/:companyId" element={<Supplier />} />
+              <Route path="/suppliers/:companyId" element={<FolderComponent value="suppliers" />} />
               
               <Route path="/suppliers/:companyId/View" element={<SupplierEditAndView />} />
 

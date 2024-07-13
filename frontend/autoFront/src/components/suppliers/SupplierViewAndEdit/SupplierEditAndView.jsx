@@ -1,15 +1,15 @@
 import "./SupplierViewAndEdit.css";
 import { useLocation } from "react-router-dom";
-import ViewImage from "../../purchase/PurchaseViewAndEdit/ViewImage";
+import ViewImage from "../../FolderComponents/PurchaseViewAndEdit/ViewImage";
 import EditSupplierImageDetail from "./EditSupplierImageDetail";
 import { Button, IconButton, Typography } from "@mui/material";
 import { ArrowLeft } from 'lucide-react';
 
 function SupplierEditAndView() {
   const location = useLocation();
-  const { supplier } = location.state || {};
+  const { item:suppliers } = location.state || {};
 
-  if (!supplier) {
+  if (!suppliers) {
     return <div>No data available</div>;
   }
 
@@ -27,10 +27,10 @@ function SupplierEditAndView() {
       </div>
       <div className="AupplierEditAndView-container">
       <div className="SupplierEditAndView-container-first">
-        <EditSupplierImageDetail data={supplier} />
+        <EditSupplierImageDetail data={suppliers} />
       </div>
       <div className="SupplierEditAndView-container-second">
-        <ViewImage URL={supplier.imageURL} />
+        <ViewImage URL={suppliers.imageURL} />
       </div>
     </div>
       

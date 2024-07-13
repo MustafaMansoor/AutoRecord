@@ -1,7 +1,7 @@
 import React from 'react';
 import useNavigationHandlers from './customHooks/useNavigationHandlers';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import "./Purchase.css";
+import "./FolderComponent.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
@@ -40,12 +40,6 @@ function NavigationTabs({ ele,companyId}) {
     >
       <MenuItem
         className="menuItem"
-        onClick={() => handleMenuClose(`/${ele[0]}/${companyId}`)}
-      >
-        {ele[0]}
-      </MenuItem>
-      <MenuItem
-        className="menuItem"
         onClick={() => handleMenuClose(`/${ele[1]}/${companyId}`)}
       >
         {ele[1]}
@@ -55,6 +49,12 @@ function NavigationTabs({ ele,companyId}) {
         onClick={() => handleMenuClose(`/${ele[2]}/${companyId}`)}
       >
         {ele[2]}
+      </MenuItem>
+      <MenuItem
+        className="menuItem"
+        onClick={() => handleMenuClose(`/${ele[3]}/${companyId}`)}
+      >
+        {ele[3]}
       </MenuItem>
     </Menu>
   </Box>
