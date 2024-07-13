@@ -1,5 +1,8 @@
 
-const {addPurchaseToCompany,addSaleToCompany,addSupplierToCompany} = require('../controller/CompanyController')
+const {addPurchaseToCompany} = require('../controller/PurchaseController');
+const {addSaleToCompany} = require('../controller/SalesController');
+const {addSupplierToCompany} = require('../controller/SupplierController');
+
 const axios = require('axios').default; // Import Axios for HTTP requests
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 

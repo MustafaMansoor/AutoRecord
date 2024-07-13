@@ -2,7 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const companyRoutes = require("./routes/CompanyRoutes"); // Adjust the path as necessary
+const companyRoutes = require("./routes/CompanyRoutes"); 
+const purchaseRoutes = require("./routes/PurchaseRoutes"); 
+const saleRoutes = require("./routes/SaleRoutes");
+const supplierRoutes = require("./routes/supplierRoutes");
 
 const ImageRoute = require("./routes/UploadImage");
 require("./connection"); // Import the connection setup file
@@ -18,6 +21,18 @@ app.get("/", (req, res) => {
 
 // Use company routes
 app.use("/api/companies", companyRoutes);
+
+
+// Use purchase routes
+app.use("/api/companies/:companyId/purchases", purchaseRoutes);
+
+// Use sale routes
+app.use("/api/companies/:companyId/sales", saleRoutes);
+
+// Use supplier routes
+app.use("/api/companies/:companyId/suppliers", supplierRoutes);
+
+
 
 
 app.use("/api/upload", ImageRoute);
