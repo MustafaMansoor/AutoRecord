@@ -25,7 +25,7 @@ function SaleEditAndView() {
         <Typography variant="h6" className="status-text">
           {sales.status}
         </Typography>
-      </div>
+</div>
 
 <div className="SaleEditAndView-container">
       <div className="SaleEditAndView-container-first">

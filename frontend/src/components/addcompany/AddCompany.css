@@ -58,9 +58,10 @@
   color: #2f2f2f;
 }
 
-.divider {
+.divider-company {
   width: 100%;
-  border: 0.5px solid #eaeaea;
+  border: 0.1px solid #eeeeee;
+  margin-bottom: 30px;
 }
 
 .addcompany-form {

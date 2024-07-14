@@ -79,7 +79,7 @@ const AddCompany = ({ show, handleClose }) => {
           </div>
         </div>
 
-        <hr className="divider" />
+        <hr className="divider-company" />
         <form className="addcompany-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="companyName">Company Name</label>

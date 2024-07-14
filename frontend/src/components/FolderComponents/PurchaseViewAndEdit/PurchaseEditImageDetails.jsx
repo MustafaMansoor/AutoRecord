@@ -6,6 +6,13 @@ import HollowTickIcon from "@mui/icons-material/CheckCircleOutline";
 import HollowExclamationTriangleIcon from "@mui/icons-material/WarningAmberOutlined";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const vatOptions = [
   { label: "Sales Standard Rated - 20%", value: "20" },
@@ -17,6 +24,8 @@ function EditImageDetails({ data }) {
   const [formData, setFormData] = useState(data);
   const { companyId } = useParams();
   const navigate = useNavigate();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState("");
 
   useEffect(() => {
     const vatPercentage = (formData.vat / formData.net) * 100;
@@ -36,8 +45,8 @@ function EditImageDetails({ data }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  async function handleSubmit(status) {
-    const updatedData = { ...formData, status };
+  async function handleSubmit(status, reason = "") {
+    const updatedData = { ...formData, status, reason };
     const purchaseId = formData._id;
 
     try {
@@ -87,6 +96,19 @@ function EditImageDetails({ data }) {
   const formatDate = (date) => {
     const d = new Date(date);
     return !isNaN(d.getTime()) ? d.toISOString().substr(0, 10) : "";
+  };
+
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleReject = () => {
+    handleSubmit("rejected", rejectionReason);
+    handleDialogClose();
   };
 
   return (
@@ -215,7 +237,7 @@ function EditImageDetails({ data }) {
         <CustomButton
           icon={<HollowExclamationTriangleIcon />}
           text="Reject"
-          onClick={() => handleSubmit("rejected")}
+          onClick={handleDialogOpen}
         />
         <CustomButton
           icon={<HollowTickIcon />}
@@ -223,6 +245,46 @@ function EditImageDetails({ data }) {
           onClick={() => handleSubmit("inbox")}
         />
       </div>
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>Please Enter Reason of Rejection</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To reject this purchase, please provide a reason for the rejection.
+          </DialogContentText>
+          <TextField
+      autoFocus
+      margin="dense"
+      label="Rejection Reason"
+      type="text"
+      fullWidth
+      variant="standard"
+      value={rejectionReason}
+      onChange={(e) => setRejectionReason(e.target.value)}
+      sx={{
+        '& .MuiInput-underline:before': {
+          borderBottomColor: 'black',
+        },
+        '& .MuiInput-underline:hover:before': {
+          borderBottomColor: 'black',
+        },
+        '& .MuiInput-underline:after': {
+          borderBottomColor: 'black',
+        },
+        '& .MuiFormLabel-root.Mui-focused': {
+          color: 'black',
+        },
+      }}
+    />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} style={{ color: "#2f2f2f" }}>
+            Cancel
+          </Button>
+          <Button onClick={handleReject} style={{ color: "#2f2f2f" }}>
+            Reject
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

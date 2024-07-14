@@ -118,7 +118,7 @@ const UploadImage = ({ show, handleClose }) => {
               </button>
             </div>
           </div>
-          <hr className="divider" />
+          <hr className="divider-upload" />
 
           <div className="form-group">
             <label htmlFor="company-select">Choose a company:</label>

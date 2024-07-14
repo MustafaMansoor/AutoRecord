@@ -48,11 +48,10 @@
   color: #2f2f2f;
 }
 
-.divider {
+.divider-upload {
   width: 100%;
-  border: 0.5px solid #eaeaea;
-  margin: 20px 0;
-  margin-bottom: 50px;
+  border: 0.1px solid #eeeeee;
+  margin-bottom: 30px;
 }
 
 .form-group {
