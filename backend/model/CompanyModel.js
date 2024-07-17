@@ -8,6 +8,8 @@ const CompanySchema = new Schema({
   purchases: [{ type: Schema.Types.ObjectId, ref: 'Purchase' }],
   sales: [{ type: Schema.Types.ObjectId, ref: 'Sales' }],
   suppliers: [{ type: Schema.Types.ObjectId, ref: 'Supplier' }],
+  people: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  admin: { type: Schema.Types.ObjectId, ref: 'User', required: false }
 });
 
 const Company = mongoose.model('Company', CompanySchema);

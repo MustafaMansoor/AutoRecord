@@ -18,6 +18,10 @@ function NavigationTabs({ ele,companyId}) {
   const navigate = useNavigate();
   const { handleMenuClick, handleMenuClose, anchorEl } = useNavigationHandlers();
 
+  function capitalizeFirstWord(input) {
+    if (!input) return input;
+    return input.charAt(0).toUpperCase() + input.slice(1);
+  }
 
   return (
     <div>
@@ -30,7 +34,7 @@ function NavigationTabs({ ele,companyId}) {
       className="purchase-menu-button"
       endIcon={<ArrowDropDownIcon className="MyBoldArrowBackIcon" />} 
     >
-      {ele[0]}
+      {capitalizeFirstWord(ele[0])}
     </Button>
     <Menu
       anchorEl={anchorEl}
@@ -42,19 +46,19 @@ function NavigationTabs({ ele,companyId}) {
         className="menuItem"
         onClick={() => handleMenuClose(`/${ele[1]}/${companyId}`)}
       >
-        {ele[1]}
+      {capitalizeFirstWord(ele[1])}
       </MenuItem>
       <MenuItem
         className="menuItem"
         onClick={() => handleMenuClose(`/${ele[2]}/${companyId}`)}
       >
-        {ele[2]}
+      {capitalizeFirstWord(ele[2])}
       </MenuItem>
       <MenuItem
         className="menuItem"
         onClick={() => handleMenuClose(`/${ele[3]}/${companyId}`)}
       >
-        {ele[3]}
+      {capitalizeFirstWord(ele[3])}
       </MenuItem>
     </Menu>
   </Box>

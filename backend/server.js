@@ -6,6 +6,7 @@ const companyRoutes = require("./routes/CompanyRoutes");
 const purchaseRoutes = require("./routes/PurchaseRoutes"); 
 const saleRoutes = require("./routes/SaleRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
+const UserRoutes = require("./routes/UserRoutes");
 
 const ImageRoute = require("./routes/UploadImage");
 require("./connection"); // Import the connection setup file
@@ -18,6 +19,8 @@ app.use(express.json()); // To parse JSON bodies
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");
 });
+
+app.use("/api/user",UserRoutes);
 
 // Use company routes
 app.use("/api/companies", companyRoutes);
