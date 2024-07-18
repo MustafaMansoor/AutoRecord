@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Sidebar.css';
-import HomeIcon from '@mui/icons-material/Home';
-import PeopleIcon from '@mui/icons-material/People';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PersonIcon from '@mui/icons-material/Person';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "./Sidebar.css";
+import HomeIcon from "@mui/icons-material/Home";
+import PeopleIcon from "@mui/icons-material/People";
+import SettingsIcon from "@mui/icons-material/Settings";
+import PersonIcon from "@mui/icons-material/Person";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 
 const Sidebar = () => {
-  const [activeItem, setActiveItem] = useState('Home');
+  const [activeItem, setActiveItem] = useState("Home");
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
   const menuItems = [
-    { name: 'Home', icon: <HomeIcon />, path: '/' },
-    { name: 'People', icon: <PeopleIcon />, path: '/people' },
-    { name: 'Settings', icon: <SettingsIcon />, path: '/settings' },
-    { name: 'Profile', icon: <PersonIcon />, path: '/profile' },
+    { name: "Home", icon: <HomeIcon />, path: "/" },
+    { name: "People", icon: <PeopleIcon />, path: "/people" },
+    { name: "Settings", icon: <SettingsIcon />, path: "/settings" },
+    { name: "Profile", icon: <PersonIcon />, path: "/profile" },
   ];
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
 
   return (
     <div className="sidebar">
@@ -25,7 +31,7 @@ const Sidebar = () => {
           {menuItems.map((item) => (
             <li
               key={item.name}
-              className={activeItem === item.name ? 'active' : ''}
+              className={activeItem === item.name ? "active" : ""}
               onClick={() => setActiveItem(item.name)}
             >
               <Link to={item.path} className="sidebar-link">
@@ -36,7 +42,13 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
-      <div className="logout" onClick={() => setActiveItem('Sign Out')}>
+      <div
+        className="logout"
+        onClick={() => {
+          setActiveItem("Sign Out");
+          handleLogout();
+        }}
+      >
         <div className="icon">
           <PowerSettingsNewIcon />
         </div>
