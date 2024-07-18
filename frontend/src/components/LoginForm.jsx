@@ -33,7 +33,7 @@ const LoginForm = () => {
             token,
           });
           const response = await axios.post(
-            "http://localhost:3000/routes/register",
+            "http://localhost:3000/api/user/register",
             { name, email, password, token }
           );
           console.log("Registered successfully:", response.data);

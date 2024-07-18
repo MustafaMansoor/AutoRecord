@@ -1,21 +1,22 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden; /* Prevent scrollbars */
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Prevent scrollbars */
+}
 .app {
-    display: flex;
-  }
-  
-  .main-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .content-center {
-    padding: 20px;
-  }
-  
+  display: flex;
+  margin-top: 1rem;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-center {
+  padding: 20px;
+}
