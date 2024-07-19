@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/dashboard/Sidebar";
 import Topbar from "./components/dashboard/Topbar";
 import Dashboard from "./components/dashboard/Dashboard";
+import People from "./components/people/People";
 import "./app.css";
 import FolderComponent from "./components/FolderComponents/FolderComponent";
 import Folders from "./components/folders/Folders";
@@ -54,8 +55,7 @@ function InnerApp() {
                   path="/suppliers/:companyId/View"
                   element={<SupplierEditAndView />}
                 />
-                {/* Add routes for new sidebar items */}
-                <Route path="/people" element={<div>People Page</div>} />
+                <Route path="/people" element={<People />} />
                 <Route path="/settings" element={<div>Settings Page</div>} />
                 <Route path="/profile" element={<div>Profile Page</div>} />
               </Routes>

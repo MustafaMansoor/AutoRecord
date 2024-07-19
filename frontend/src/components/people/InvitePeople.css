@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+.invitepeople-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: "Inter", sans-serif;
+}
+
+.invitepeople-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.invitepeople-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-left: 30px;
+}
+
+.invitepeople-header-left {
+  flex: 0.96;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.invitepeople-header-right {
+  flex: 0.04;
+}
+
+.close-button-invitepeople {
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.invitepeople-title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #2f2f2f;
+}
+
+.divider-invite {
+  width: 100%;
+  border: 0.1px solid #eeeeee;
+  margin-bottom: 30px;
+}
+
+.invitepeople-form {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  flex-direction: column;
+  margin-top: -30px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 300;
+  color: black;
+  font-size: 15px;
+}
+
+.form-group input::placeholder {
+  color: #c4c1c1;
+}
+
+.form-group input,
+.form-group select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #c3c3c3;
+  border-radius: 6px;
+  width: 97%;
+}
+
+.form-group select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #c3c3c3;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #597c26; /* Theme color */
+  outline: none; /* Optional: Remove default outline */
+}
+
+.submit-button {
+  padding: 10px 30px;
+  background-color: #86b049;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button:hover {
+  background-color: #6c9430;
+  border-color: #516b2a;
+}
+
+/* Media Queries with Max-width*/
+@media (max-width: 768px) {
+  .invitepeople-backdrop {
+    padding: 20px;
+  }
+  .invitepeople-content {
+    width: 90%;
+  }
+
+  .invitepeople-form {
+    padding: 20px;
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-group label {
+    margin-bottom: 5px;
+  }
+
+  .form-group input {
+    width: 95%;
+  }
+}

@@ -10,13 +10,11 @@ const Topbar = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
-    console.log("clicked");
     setShowModal(true);
   };
   const [openUploadImage, setopenUploadImage] = useState(false);
 
   const handleopenUploadImage = () => {
-    console.log("clicked");
     setopenUploadImage(true);
   };
   return (
