@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./UploadImage.css";
-
+import { useAuth } from "../Context/AuthContext";
 
 const UploadImage = ({ show, handleClose }) => {
   const [companies, setCompanies] = useState([]);
@@ -12,22 +12,34 @@ const UploadImage = ({ show, handleClose }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef(null);
+  const { setIsAuthenticated } = useAuth();
 
   const categories = ["purchase", "sales", "suppliers"];
+
 
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/companies");
+        const token = localStorage.getItem("token");
+        console.log(token);
+        const response = await axios.get("http://localhost:3000/api/companies", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setCompanies(response.data.companies);
       } catch (error) {
         console.error("Error fetching companies:", error);
+        if (error.response && error.response.data.name === 'TokenExpiredError') {
+          localStorage.removeItem("token");
+          localStorage.removeItem("role");
+          setIsAuthenticated(false);
+        }
       }
     };
 
     fetchCompanies();
-  }, []);
-
+  }, [setIsAuthenticated]);
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setSelectedImage(e.target.files[0]);

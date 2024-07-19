@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,6 +9,13 @@ const AddCompany = ({ show, handleClose }) => {
   const [country, setCountry] = useState("");
   const [currency, setCurrency] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    // Get role from local storage
+    const storedRole = localStorage.getItem("role");
+    setRole(storedRole);
+  }, []);
 
   const handleCountryChange = (e) => {
     setCountry(e.target.value);
@@ -27,6 +34,11 @@ const AddCompany = ({ show, handleClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (role !== "admin") {
+      toast.error("You don't have permission to create a new company.");
+      return;
+    }
+
     setIsLoading(true);
 
     const data = {
@@ -39,8 +51,7 @@ const AddCompany = ({ show, handleClose }) => {
     };
 
     try {
-      // Replace 'your-jwt-token' with the actual token
-      const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
+      const token = localStorage.getItem("token");
 
       const response = await axios.post(
         "http://localhost:3000/api/companies/",

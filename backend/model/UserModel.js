@@ -5,7 +5,7 @@ const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, enum: ['admin', 'user'], default: 'user' },
+  role: { type: String, enum: ['admin', 'people'], default: 'people' },
   companies: [{ type: Schema.Types.ObjectId, ref: 'Company' }]
 });
 
