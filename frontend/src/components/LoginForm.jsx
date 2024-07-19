@@ -149,6 +149,7 @@ const LoginForm = () => {
         <div className="login-overlay-container">
           <div className="login-overlay">
             <div className="login-overlay-panel login-overlay-left">
+            <img className="logo" src="logo.svg" alt="Logo" />
               <h1 className="login-h1">Welcome Back!</h1>
               <p className="login-p">Please login with your personal info</p>
               <button
@@ -160,9 +161,10 @@ const LoginForm = () => {
               </button>
             </div>
             <div className="login-overlay-panel login-overlay-right">
-              <h1 className="login-h1">Hello, Friend!</h1>
+            <img className="logo" src="logo.svg" alt="Logo" />
+              <h1 className="login-h1">AutoRecord</h1>
               <p className="login-p">
-                Enter your personal details and start your journey with us
+              Simplify invoice management with<br></br> AI-driven Accuracy
               </p>
               <button
                 className="ghost login-button"
