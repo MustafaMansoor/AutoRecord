@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Token = require('../model/TokenModel');
 const crypto = require('crypto');
+const Company = require('../model/CompanyModel');
+
 // Register a new user (admin or people)
 const register = async (req, res) => {
   const { name, email, password, token } = req.body;
@@ -30,13 +32,23 @@ const register = async (req, res) => {
 
     // Create a new user with the role from the token
     const newUser = new User({
-      username:name,
+      username: name,
       email,
       password: hashedPassword,
       role: tokenDoc.role,
     });
 
     await newUser.save();
+
+    // If the role is 'people', add them to the specified company
+    if (tokenDoc.role === 'people' && tokenDoc.companyId) {
+      const company = await Company.findById(tokenDoc.companyId);
+      if (company) {
+        company.people.push(newUser._id);
+        await company.save();
+      }
+    }
+
     await Token.deleteOne({ token }); // Remove the token after successful registration
 
     // Generate a JWT token
@@ -78,14 +90,14 @@ const login = async (req, res) => {
 
 // Function to generate a token for registration (for admin or people)
 const generateToken = async (req, res) => {
-  const { email, role } = req.body;
+  const { email, role, companyId } = req.body;
 
   if (role !== 'admin' && role !== 'people') {
     return res.status(400).json({ message: 'Invalid role' });
   }
 
   const token = crypto.randomBytes(32).toString('hex');
-  const newToken = new Token({ token, role, email });
+  const newToken = new Token({ token, role, email, companyId });
 
   await newToken.save();
 
@@ -94,4 +106,4 @@ const generateToken = async (req, res) => {
   res.status(201).json({ message: 'Token generated', token });
 };
 
-module.exports = { register, login,generateToken };
+module.exports = { register, login, generateToken };

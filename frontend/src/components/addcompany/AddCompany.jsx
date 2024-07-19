@@ -9,8 +9,6 @@ const AddCompany = ({ show, handleClose }) => {
   const [country, setCountry] = useState("");
   const [currency, setCurrency] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState("");
 
   const handleCountryChange = (e) => {
     setCountry(e.target.value);
@@ -41,13 +39,20 @@ const AddCompany = ({ show, handleClose }) => {
     };
 
     try {
+      // Replace 'your-jwt-token' with the actual token
+      const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
+
       const response = await axios.post(
         "http://localhost:3000/api/companies/",
-        data
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       console.log("Company added:", response.data);
       setIsLoading(false);
-      setIsSuccess(true);
       setCompanyName("");
       setCountry("");
       setCurrency("");
@@ -55,8 +60,6 @@ const AddCompany = ({ show, handleClose }) => {
     } catch (error) {
       console.error("Error creating company:", error);
       setIsLoading(false);
-      setIsSuccess(false);
-      setError("Failed to create company.");
       toast.error("Error creating company. Please try again.");
     }
   };

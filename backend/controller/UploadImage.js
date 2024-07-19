@@ -73,7 +73,6 @@ function parseDescription(description) {
 
   const getData = async (req, res) => {
     const { imageUrl, company, category } = req.body;
-    console.log(imageUrl, company, category);
   
     try {
       const description = await describeImage(imageUrl);

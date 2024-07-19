@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Cloudinary } from "@cloudinary/url-gen";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./UploadImage.css";
 
-const cloudinary = new Cloudinary({ cloud: { cloudName: "dkxbixsze" } });
 
 const UploadImage = ({ show, handleClose }) => {
   const [companies, setCompanies] = useState([]);

@@ -3,11 +3,30 @@ const Company = require("../model/CompanyModel");
 const Purchase = require("../model/PurchaseModel");
 const Sale = require("../model/SalesModel");
 const Supplier = require("../model/SupplierModel");
+const jwt = require('jsonwebtoken');
+
 
 const createCompany = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
-  try {
+  try {const authHeader = req.headers.authorization;
+    
+    // Check if token is provided
+    if (!authHeader) {
+      return res.status(401).json({ error: "Access denied. No token provided." });
+    }
+
+    const token = authHeader.split(" ")[1];
+   
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+    const userRole = decodedToken.role;
+
+    // Check if the user is an admin
+    if (userRole !== 'admin') {
+      return res.status(403).json({ error: "Access denied. Only admins can create companies." });
+    }
+
     const {
       purchases = [],
       sales = [],
@@ -104,6 +123,8 @@ const createCompany = async (req, res) => {
           purchases: purchaseIds,
           sales: saleIds,
           suppliers: supplierIds,
+          admin: userId,
+          people: [],
         },
       ],
       { session }
@@ -125,9 +146,34 @@ const createCompany = async (req, res) => {
 
 const getAllCompanies = async (req, res) => {
   try {
-    const companies = await Company.find({});
+    const authHeader = req.headers.authorization;
+    
+    // Check if token is provided
+    if (!authHeader) {
+      return res.status(401).json({ error: "Access denied. No token provided." });
+    }
+
+    const token = authHeader.split(" ")[1];
+   
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+    const userRole = decodedToken.role;
+
+    let companies;
+
+    // Fetch companies based on user role
+    if (userRole === 'admin') {
+      companies = await Company.find({ admin: userId });
+    } else {
+      companies = await Company.find({ people: userId });
+    }
+
     res.status(200).json({ companies });
   } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ error: "Token has expired" });
+    }
+    
     console.error("Error fetching companies:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }

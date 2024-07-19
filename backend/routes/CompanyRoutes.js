@@ -8,9 +8,11 @@ const {
   deleteCompany,
   getAllFoldersByCompany
 } = require("../controller/CompanyController.js");
+const { authMiddleware } = require("../Middleware/auth.js");
+
 
 // Routes for managing companies
-router.route("/").post(createCompany).get(getAllCompanies);
+router.route("/").post(authMiddleware,createCompany).get(authMiddleware,getAllCompanies);
 
 router
   .route("/:id")

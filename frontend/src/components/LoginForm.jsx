@@ -14,7 +14,7 @@ const LoginForm = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated } = useContext(AuthContext);
 
   const handleToggle = () => {
     setIsSignup(!isSignup);
@@ -40,7 +40,7 @@ const LoginForm = () => {
           alert("User registered successfully");
           handleToggle();
         } catch (error) {
-          error.response.data.error;
+          setError(error.response.data.message);
         }
       } else {
         const response = await axios.post(
@@ -51,6 +51,10 @@ const LoginForm = () => {
           }
         );
         console.log("Logged in successfully:", response.data);
+
+        const { token , role } = response.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", role);
         setIsAuthenticated(true); // Set isAuthenticated to true
 
         navigate("/");
@@ -62,7 +66,7 @@ const LoginForm = () => {
       setToken("");
       setError("");
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.message);
     }
   };
 
@@ -127,7 +131,7 @@ const LoginForm = () => {
             />
             <input
               className="login-input"
-              type="token"
+              type="text"
               placeholder="Token"
               value={token}
               onChange={(e) => setToken(e.target.value)}
