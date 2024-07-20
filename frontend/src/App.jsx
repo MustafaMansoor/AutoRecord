@@ -13,59 +13,36 @@ import SupplierEditAndView from "./components/suppliers/SupplierViewAndEdit/Supp
 import LoginForm from "./components/LoginForm";
 import { AuthProvider } from "./components/Context/AuthContext";
 import { useAuth } from "./components/Context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 function InnerApp() {
   const { isAuthenticated } = useAuth();
 
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div className="app">
-      {isAuthenticated ? (
-        <>
-          <Sidebar />
-          <div className="main-content">
-            <Topbar />
-            <div>
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route
-                  path="/companies/:companyId/folders"
-                  element={<Folders />}
-                />
-                <Route
-                  path="/purchases/:companyId"
-                  element={<FolderComponent value="purchases" />}
-                />
-                <Route
-                  path="/purchases/:companyId/View"
-                  element={<PurchaseEditAndViewPage />}
-                />
-                <Route
-                  path="/sales/:companyId"
-                  element={<FolderComponent value="sales" />}
-                />
-                <Route
-                  path="/sales/:companyId/View"
-                  element={<SaleEditAndView />}
-                />
-                <Route
-                  path="/suppliers/:companyId"
-                  element={<FolderComponent value="suppliers" />}
-                />
-                <Route
-                  path="/suppliers/:companyId/View"
-                  element={<SupplierEditAndView />}
-                />
-                <Route path="/people" element={<People />} />
-                <Route path="/settings" element={<div>Settings Page</div>} />
-                <Route path="/profile" element={<div>Profile Page</div>} />
-              </Routes>
-            </div>
-          </div>
-        </>
-      ) : (
-        <LoginForm />
-        
-      )}
+      <Sidebar />
+      <div className="main-content">
+        <Topbar />
+        <div>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/companies/:companyId/folders" element={<Folders />} />
+            <Route path="/purchases/:companyId" element={<FolderComponent value="purchases" />} />
+            <Route path="/purchases/:companyId/View" element={<PurchaseEditAndViewPage />} />
+            <Route path="/sales/:companyId" element={<FolderComponent value="sales" />} />
+            <Route path="/sales/:companyId/View" element={<SaleEditAndView />} />
+            <Route path="/suppliers/:companyId" element={<FolderComponent value="suppliers" />} />
+            <Route path="/suppliers/:companyId/View" element={<SupplierEditAndView />} />
+            <Route path="/people" element={<People />} />
+            <Route path="/settings" element={<div>Settings Page</div>} />
+            <Route path="/profile" element={<div>Profile Page</div>} />
+          </Routes>
+        </div>
+      </div>
     </div>
   );
 }
@@ -75,6 +52,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/*" element={<InnerApp />} />
         </Routes>
       </Router>
