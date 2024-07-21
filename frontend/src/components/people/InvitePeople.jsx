@@ -7,7 +7,7 @@ import "./InvitePeople.css";
 const InvitePeople = ({ show, handleClose }) => {
   const [email, setEmail] = useState("");
   const [companies, setCompanies] = useState([]);
-  const [selectedCompany, setSelectedCompany] = useState("");
+  const [selectedCompany, setSelectedCompany] = useState({ id: "", name: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -42,11 +42,14 @@ const InvitePeople = ({ show, handleClose }) => {
 
     setIsSubmitting(true);
 
+
     try {
       const token = localStorage.getItem("token");
+      const admin = localStorage.getItem("adminName");
+      console.log(admin);
       const response = await axios.post(
-        "http://localhost:3000/api/invite",
-        { email, companyId: selectedCompany },
+        "http://localhost:3000/api/user/invite",
+        { email, companyId: selectedCompany.id, admin, company :selectedCompany.name },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -100,8 +103,16 @@ const InvitePeople = ({ show, handleClose }) => {
               <label htmlFor="company-select">Choose a Company</label>
               <select
                 id="company-select"
-                value={selectedCompany}
-                onChange={(e) => setSelectedCompany(e.target.value)}
+                value={selectedCompany.id}
+                onChange={(e) => {
+                  const selectedOption = e.target.options[e.target.selectedIndex];
+                  const selectedCompany = {
+                    id: selectedOption.value,
+                    name: selectedOption.text
+                  };
+                  setSelectedCompany(selectedCompany);
+                  
+                }}
                 required
               >
                 <option value="">Select a Company</option>

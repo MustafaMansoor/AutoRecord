@@ -77,6 +77,7 @@ const register = async (req, res) => {
   }
 };
 
+
 // Login a user
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -101,7 +102,7 @@ const login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ token, role: user.role });
+    res.status(200).json({ token, role: user.role, adminName: user.username });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -160,4 +161,22 @@ const sendEmail = async (req, res) => {
   }
 };
 
-module.exports = { register, login, generateToken, sendEmail };
+
+
+  const validateToken= (req, res) => {
+  const { token } = req.body;
+  if (!token) {
+    return res.status(400).json({ valid: false });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ valid: false });
+    }
+
+    // Optionally, you can add more checks here (e.g., check if the user still exists in the database)
+    res.json({ valid: true });
+  });
+};
+
+module.exports = { register, login, generateToken, sendEmail,validateToken };

@@ -52,9 +52,10 @@ const LoginForm = () => {
         );
         console.log("Logged in successfully:", response.data);
 
-        const { token , role } = response.data;
+        const { token , role,adminName } = response.data;
         localStorage.setItem("token", token);
         localStorage.setItem("role", role);
+        localStorage.setItem("adminName", adminName);
         setIsAuthenticated(true); // Set isAuthenticated to true
 
         navigate("/");
