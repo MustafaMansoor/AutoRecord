@@ -34,31 +34,38 @@ const InvitePeople = ({ show, handleClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!email || !selectedCompany) {
       toast.error("Please enter an email and select a company.");
       return;
     }
-
+  
     setIsSubmitting(true);
-
-
+  
     try {
       const token = localStorage.getItem("token");
       const admin = localStorage.getItem("adminName");
-      console.log(admin);
+      
       const response = await axios.post(
         "http://localhost:3000/api/user/invite",
-        { email, companyId: selectedCompany.id, admin, company :selectedCompany.name },
+        { email, companyId: selectedCompany.id, admin, company: selectedCompany.name },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           }
         }
       );
-      toast.success("Invitation sent successfully!");
-      setEmail("");
-      setSelectedCompany("");
+  
+      // Check if the response status is successful (200-299)
+      if (response.status >= 200 && response.status < 300) {
+        toast.success("Invitation sent successfully!");
+        setEmail("");
+        setSelectedCompany("");
+      } else {
+        // If the response status is not successful, log and show an error
+        console.error("Error sending invitation with response status:", response.status);
+        toast.error("Error sending invitation. Please try again.");
+      }
     } catch (error) {
       console.error("Error sending invitation:", error);
       toast.error("Error sending invitation. Please try again.");

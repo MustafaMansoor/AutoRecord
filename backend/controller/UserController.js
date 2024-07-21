@@ -1,27 +1,50 @@
 const User = require("../model/UserModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Token = require("../model/TokenModel");
-const crypto = require("crypto");
-const Company = require("../model/CompanyModel");
-const nodemailer = require("nodemailer");
 
-// Email configuration
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const crypto = require("crypto");
+const Token = require("../model/TokenModel");
+const Company = require("../model/CompanyModel");
+
+const decrypt = (encryptedText) => {
+  const algorithm = 'aes-256-ctr';
+  const secretKey = process.env.SECRET_KEY;
+
+  if (!secretKey) {
+    throw new Error('Secret key not defined in environment variables');
+  }
+
+  // Ensure the key is 32 bytes (64 hex characters)
+  const keyBuffer = Buffer.from(secretKey, 'hex');
+  if (keyBuffer.length !== 32) {
+    throw new Error('Secret key must be 32 bytes long');
+  }
+
+  // Split the encryptedText into IV and encrypted data
+  const parts = encryptedText.split(':');
+  if (parts.length !== 2) {
+    throw new Error('Invalid encrypted text format');
+  }
+
+  const [ivHex, encryptedHex] = parts;
+  const iv = Buffer.from(ivHex, 'hex');
+  const encrypted = Buffer.from(encryptedHex, 'hex');
+
+  // Create a decipher instance
+  const decipher = crypto.createDecipheriv(algorithm, keyBuffer, iv);
+  const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
+
+  return decrypted.toString();
+};
+
 
 // Register a new user (admin or people)
 const register = async (req, res) => {
   const { name, email, password, token } = req.body;
-
+  
+  const decryptedToken = decrypt(token);
   try {
-    // Find and validate the token
-    const tokenDoc = await Token.findOne({ token });
+    const tokenDoc = await Token.findOne({ token: decryptedToken });
     if (!tokenDoc) {
       return res.status(400).json({ message: "Invalid or expired token" });
     }
@@ -51,7 +74,7 @@ const register = async (req, res) => {
     });
 
     await newUser.save();
-
+    
     // If the role is 'people', add them to the specified company
     if (tokenDoc.role === "people" && tokenDoc.companyId) {
       const company = await Company.findById(tokenDoc.companyId);
@@ -61,8 +84,8 @@ const register = async (req, res) => {
       }
     }
 
-    await Token.deleteOne({ token }); // Remove the token after successful registration
-
+    await Token.deleteOne({ token: decryptedToken }); // Remove the token after successful registration
+    
     // Generate a JWT token
     const jwtToken = jwt.sign(
       { userId: newUser._id, role: newUser.role },
@@ -76,7 +99,6 @@ const register = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
 
 // Login a user
 const login = async (req, res) => {
@@ -109,59 +131,6 @@ const login = async (req, res) => {
   }
 };
 
-// Function to generate a token for registration (for admin or people)
-const generateToken = async (req, res) => {
-  const { email, role, companyId } = req.body;
-
-  if (role !== "admin" && role !== "people") {
-    return res.status(400).json({ message: "Invalid role" });
-  }
-
-  const token = crypto.randomBytes(32).toString("hex");
-  const newToken = new Token({ token, role, email, companyId });
-
-  await newToken.save();
-
-  // Send the token to the user via email (use your preferred email service)
-
-  res.status(201).json({ message: "Token generated", token });
-};
-
-const sendEmail = async (req, res) => {
-  const { email, signupLink, admin, company } = req.body;
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: `AutoRecord Company Invitation by ${admin} for ${company}`,
-    html: `
-  <div style="text-align: center; font-family: Arial, sans-serif; color: #333;">
-    <h1 style="color: #648435;">AutoRecord Company Invitation</h1>
-    <p style="font-size: 16px;">You have been invited to join <strong>${company}</strong> by <strong>${admin}</strong>.</p>
-    <p style="font-size: 16px;">Click the link below to sign up:</p>
-    <a href="${signupLink}" style="
-      display: inline-block;
-      padding: 10px 20px;
-      margin: 10px 0;
-      font-size: 18px;
-      color: #fff;
-      background-color: #648435;
-      text-decoration: none;
-      border-radius: 5px;
-    ">Sign Up</a>
-    <p style="font-size: 12px; color: #999;">If you did not request this invitation, please ignore this email.</p>
-  </div>
-`,
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log("Email sent");
-  } catch (error) {
-    console.error("Error sending email:", error);
-  }
-};
-
-
 
   const validateToken= (req, res) => {
   const { token } = req.body;
@@ -179,4 +148,4 @@ const sendEmail = async (req, res) => {
   });
 };
 
-module.exports = { register, login, generateToken, sendEmail,validateToken };
+module.exports = { register, login, validateToken };

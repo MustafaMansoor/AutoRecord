@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./login.css";
@@ -26,12 +26,6 @@ const LoginForm = () => {
     try {
       if (isSignup) {
         try {
-          console.log("Registering user:", {
-            name,
-            email,
-            password,
-            token,
-          });
           const response = await axios.post(
             "http://localhost:3000/api/user/register",
             { name, email, password, token }
@@ -52,7 +46,7 @@ const LoginForm = () => {
         );
         console.log("Logged in successfully:", response.data);
 
-        const { token , role,adminName } = response.data;
+        const { token , role, adminName } = response.data;
         localStorage.setItem("token", token);
         localStorage.setItem("role", role);
         localStorage.setItem("adminName", adminName);
@@ -70,6 +64,15 @@ const LoginForm = () => {
       setError(error.response.data.message);
     }
   };
+
+  // Fetch token from URL when component mounts
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = queryParams.get("token");
+    if (tokenFromUrl) {
+      setToken(tokenFromUrl);
+    }
+  }, []);
 
   return (
     <div className="main-body">
@@ -130,14 +133,6 @@ const LoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <input
-              className="login-input"
-              type="text"
-              placeholder="Token"
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              required
-            />
             <button
               type="submit"
               onClick={() => setIsSignup(isSignup)}
@@ -150,7 +145,7 @@ const LoginForm = () => {
         <div className="login-overlay-container">
           <div className="login-overlay">
             <div className="login-overlay-panel login-overlay-left">
-            <img className="logo" src="logo.svg" alt="Logo" />
+              <img className="logo" src="logo.svg" alt="Logo" />
               <h1 className="login-h1">Welcome Back!</h1>
               <p className="login-p">Please login with your personal info</p>
               <button
@@ -162,10 +157,10 @@ const LoginForm = () => {
               </button>
             </div>
             <div className="login-overlay-panel login-overlay-right">
-            <img className="logo" src="logo.svg" alt="Logo" />
+              <img className="logo" src="logo.svg" alt="Logo" />
               <h1 className="login-h1">AutoRecord</h1>
               <p className="login-p">
-              Simplify invoice management with<br></br> AI-driven Accuracy
+                Simplify invoice management with<br></br> AI-driven Accuracy
               </p>
               <button
                 className="ghost login-button"
