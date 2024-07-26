@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Folders.css"; // Import the CSS file
 import InboxIcon from "@mui/icons-material/Inbox";
-
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
 const Folders = () => {
   const { companyId } = useParams();
+  const navigate = useNavigate(); // Use navigate hook
   const [counts, setCounts] = useState({
     purchases: { inbox: 0, rejected: 0, processing: 0 },
     sales: { inbox: 0, rejected: 0, processing: 0 },
@@ -50,8 +50,12 @@ const Folders = () => {
     fetchCounts();
   }, [companyId]);
 
-  const renderCard = (title, data) => (
-    <div className="folder-card">
+  const handleNavigation = (type) => {
+    navigate(`/${type}/${companyId}`);
+  };
+
+  const renderCard = (title, data, type) => (
+    <div className="folder-card" onClick={() => handleNavigation(type)}>
       <div className="folder-card-content">
         <h3 className="folder-card-title">{title}</h3>
         <hr />
@@ -111,9 +115,9 @@ const Folders = () => {
 
   return (
     <div className="folder-grid-container">
-      {renderCard("Purchases", counts.purchases)}
-      {renderCard("Sales", counts.sales)}
-      {renderCard("Suppliers", counts.suppliers)}
+      {renderCard("Purchases", counts.purchases, "purchases")}
+      {renderCard("Sales", counts.sales, "sales")}
+      {renderCard("Suppliers", counts.suppliers, "suppliers")}
     </div>
   );
 };
