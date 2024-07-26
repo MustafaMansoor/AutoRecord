@@ -6,13 +6,13 @@ const {
   getCompanyById,
   updateCompany,
   deleteCompany,
-  getAllFoldersByCompany
+  getAllFoldersByCompany,
+  getAllCompanyPeople
 } = require("../controller/CompanyController.js");
 const { authMiddleware } = require("../Middleware/auth.js");
 
-
 // Routes for managing companies
-router.route("/").post(authMiddleware,createCompany).get(authMiddleware,getAllCompanies);
+router.route("/").post(authMiddleware, createCompany).get(authMiddleware, getAllCompanies);
 
 router
   .route("/:id")
@@ -21,6 +21,6 @@ router
   .delete(deleteCompany);
 
 router.get("/:companyId/folders", getAllFoldersByCompany);
-
+router.get("/:companyId/people", getAllCompanyPeople);
 
 module.exports = router;

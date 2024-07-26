@@ -230,9 +230,6 @@ const deleteCompany = async (req, res) => {
 
 
 
-
-
-
 const getAllFoldersByCompany = async (req, res) => {
   try {
     const { companyId } = req.params;
@@ -261,6 +258,25 @@ const getAllFoldersByCompany = async (req, res) => {
 };
 
 
+const getAllCompanyPeople = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    // Find the company by ID and populate the people field
+    const company = await Company.findById(companyId).populate("people");
+
+    if (!company) {
+      return res.status(404).json({ error: "Company not found" });
+    }
+
+    res.status(200).json({ people: company.people });
+  } catch (error) {
+    console.error("Error fetching people of company:", error);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
+  }
+};
 
 module.exports = {
   createCompany,
@@ -268,5 +284,6 @@ module.exports = {
   getCompanyById,
   updateCompany,
   deleteCompany,
-  getAllFoldersByCompany
+  getAllFoldersByCompany,
+  getAllCompanyPeople 
 };

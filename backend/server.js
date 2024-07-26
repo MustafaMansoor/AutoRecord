@@ -35,9 +35,6 @@ app.use("/api/companies/:companyId/sales", saleRoutes);
 // Use supplier routes
 app.use("/api/companies/:companyId/suppliers", supplierRoutes);
 
-
-
-
 app.use("/api/upload", ImageRoute);
 
 

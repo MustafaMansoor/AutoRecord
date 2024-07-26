@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const Company = require("../model/CompanyModel");
 const Purchase = require("../model/PurchaseModel");
 
-
-
-
-
 const addPurchaseToCompany = async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
