@@ -35,7 +35,7 @@ const InvitePeople = ({ show, handleClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    if (!email || !selectedCompany) {
+    if (!email || !selectedCompany.id) {
       toast.error("Please enter an email and select a company.");
       return;
     }
@@ -45,6 +45,13 @@ const InvitePeople = ({ show, handleClose }) => {
     try {
       const token = localStorage.getItem("token");
       const admin = localStorage.getItem("adminName");
+      const role = localStorage.getItem("role");
+
+      if (role !== 'admin') {
+        toast.error("Access denied. Only admins can invite people.");
+        setIsSubmitting(false);
+        return;
+      }
       
       const response = await axios.post(
         "http://localhost:3000/api/user/invite",
@@ -60,7 +67,7 @@ const InvitePeople = ({ show, handleClose }) => {
       if (response.status >= 200 && response.status < 300) {
         toast.success("Invitation sent successfully!");
         setEmail("");
-        setSelectedCompany("");
+        setSelectedCompany({ id: "", name: "" });
       } else {
         // If the response status is not successful, log and show an error
         console.error("Error sending invitation with response status:", response.status);
@@ -118,7 +125,6 @@ const InvitePeople = ({ show, handleClose }) => {
                     name: selectedOption.text
                   };
                   setSelectedCompany(selectedCompany);
-                  
                 }}
                 required
               >

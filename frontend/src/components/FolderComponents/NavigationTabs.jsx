@@ -2,7 +2,6 @@ import React from 'react';
 import useNavigationHandlers from './customHooks/useNavigationHandlers';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./FolderComponent.css";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 
