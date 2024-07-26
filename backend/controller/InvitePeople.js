@@ -2,6 +2,8 @@
 const crypto = require("crypto");
 const Token = require("../model/TokenModel");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
+
 
 // Email configuration
 const transporter = nodemailer.createTransport({
@@ -14,25 +16,41 @@ const transporter = nodemailer.createTransport({
 
 
 
-const invitePeople = async (req, res) => {
-  const { email, companyId, admin, company } = req.body;
 
+const invitePeople = async (req, res) => {
   try {
-   const token =  await generateToken(email, "people", companyId);
-    const signupLink = `http://localhost:5173/login?token=${token}`;
+    const authHeader = req.headers.authorization;
+    
+    // Check if token is provided
+    if (!authHeader) {
+      return res.status(401).json({ error: "Access denied. No token provided." });
+    }
+
+    const token = authHeader.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+    const userRole = decodedToken.role;
+
+    // Check if the user is an admin
+    if (userRole !== 'admin') {
+      return res.status(403).json({ error: "Access denied. Only admins can create companies." });
+    }
+
+    const { email, companyId, admin, company } = req.body;
+    const inviteToken = await generateToken(email, "people", companyId); // renamed to avoid conflict
+    const signupLink = `http://localhost:5173/login?token=${inviteToken}`;
     const status = await sendEmail(email, signupLink, admin, company);
+
     if (status) {
       res.status(200).json({ message: "User invited successfully" });
     } else {
       res.status(500).json({ message: "Error sending email" });
     }
-
+  } catch (error) {
+    console.error("Error inviting user:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
-    catch (error) {
-        console.error("Error inviting user:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-}
+};
 
 const encrypt = (text) => {
   const algorithm = 'aes-256-ctr';
