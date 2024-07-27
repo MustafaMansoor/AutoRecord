@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./login.css";
 import { AuthContext } from "./Context/AuthContext";
+import { toast, ToastContainer } from "react-toastify";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -76,8 +77,23 @@ const LoginForm = () => {
     }
   }, []);
 
+  const handleResetPassword = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/user/reset-password",
+        { email }
+      );
+      console.log("Reset password email sent:", response.data);
+      toast.success("Reset password email sent");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      setError(error.response.data.message);
+    }
+  };
+
   return (
     <div className="main-body">
+      <ToastContainer />
       <div
         className={`login-container ${isSignup ? "right-panel-active" : ""}`}
       >
@@ -100,7 +116,7 @@ const LoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <a className="login-a" href="#">
+            <a className="login-a" onClick={handleResetPassword}>
               Forgot your password?
             </a>
             <button className="login-button" type="submit">

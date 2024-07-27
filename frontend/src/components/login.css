@@ -8,7 +8,7 @@
     var(--main-color),
     var(--secondary-color)
   );
-  background: url('login_background.png') no-repeat center center fixed;
+  background: url("login_background.png") no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -16,7 +16,6 @@
   height: 100px;
   width: 100px;
 }
-
 
 .main-body {
   font-family: "Inter", sans-serif;
@@ -50,6 +49,11 @@
   font-size: 14px;
   text-decoration: none;
   margin: 15px 0;
+}
+
+.login-a:hover {
+  color: var(--main-color);
+  cursor: pointer;
 }
 
 .login-button {
