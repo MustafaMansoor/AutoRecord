@@ -4,6 +4,8 @@ import CustomButton from "./Button";
 import AddIcon from '@mui/icons-material/Add';
 import InvitePeople from './InvitePeople';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './People.css';
 
 const People = () => {
@@ -38,17 +40,27 @@ const People = () => {
     setShowInvitePopup(false);
   };
 
-  const handleDelete = async (personId) => {
+  const handleDelete = async (person_Id, company_Id) => {
     try {
-      // Implement the delete logic here
-      console.log(`Delete person with ID: ${personId}`);
+      const token = localStorage.getItem('token');
+      
+      const removeUserResponse = await axios.post('http://localhost:3000/api/companies/remove-user', {
+        companyId: company_Id,
+        userId: person_Id
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      toast.success("User removed successfully!");
     } catch (error) {
       console.error("Error deleting person:", error);
+      toast.error("Error removing user. Please try again.");
     }
   };
 
   return (
     <div>
+      <ToastContainer />
       <CustomButton
         icon={<AddIcon />}
         text="Invite People"
@@ -74,7 +86,7 @@ const People = () => {
                   <TableCell>{company.companyName}</TableCell>
                   <TableCell>
                     <Button 
-                      onClick={() => handleDelete(person._id)} 
+                      onClick={() => handleDelete(person._id, company._id)} 
                       variant="contained" 
                       sx={{
                         backgroundColor: "#FA3F49", 

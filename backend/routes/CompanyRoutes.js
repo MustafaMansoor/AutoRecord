@@ -7,7 +7,8 @@ const {
   updateCompany,
   deleteCompany,
   getAllFoldersByCompany,
-  getAllCompanyPeople
+  getAllCompanyPeople,
+  removeUserFromCompany
 } = require("../controller/CompanyController.js");
 const { authMiddleware } = require("../Middleware/auth.js");
 
@@ -22,5 +23,6 @@ router
   .delete(deleteCompany);
 
 router.get("/:companyId/folders", getAllFoldersByCompany);
+router.post("/remove-user", authMiddleware, removeUserFromCompany);
 
 module.exports = router;

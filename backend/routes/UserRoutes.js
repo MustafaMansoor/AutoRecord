@@ -16,7 +16,6 @@ router.post("/login", login);
 router.post("/validate-token", validateToken);
 router.post("/reset-password", resetPassword);
 router.post("/update-password", updatePassword);
-
 router.post("/invite", invitePeople);
 
 module.exports = router;

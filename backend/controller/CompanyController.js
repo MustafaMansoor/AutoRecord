@@ -289,6 +289,36 @@ const getAllCompanyPeople = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+const removeUserFromCompany = async (req, res) => {
+  const { companyId, userId } = req.body;
+
+  try {
+    // Find the company by ID
+    const company = await Company.findById(companyId);
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+
+    // Check if the user ID exists in the company's people array
+    const userIndex = company.people.indexOf(userId);
+    if (userIndex === -1) {
+      return res.status(400).json({ message: "User not associated with company" });
+    }
+
+    // Remove the user ID from the company's people array
+    company.people.splice(userIndex, 1);
+
+    // Save the updated company document
+    await company.save();
+
+    res.status(200).json({ message: "User removed from company successfully" });
+  } catch (error) {
+    console.error("Error removing user from company:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   createCompany,
   getAllCompanies,
@@ -296,5 +326,6 @@ module.exports = {
   updateCompany,
   deleteCompany,
   getAllFoldersByCompany,
-  getAllCompanyPeople 
+  getAllCompanyPeople,
+  removeUserFromCompany  // Export the new method
 };
