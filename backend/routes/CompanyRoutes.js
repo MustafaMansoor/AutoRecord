@@ -14,6 +14,7 @@ const { authMiddleware } = require("../Middleware/auth.js");
 // Routes for managing companies
 router.route("/").post(authMiddleware, createCompany).get(authMiddleware, getAllCompanies);
 
+router.get("/all", getAllCompanyPeople);
 router
   .route("/:id")
   .get(getCompanyById)
@@ -21,6 +22,5 @@ router
   .delete(deleteCompany);
 
 router.get("/:companyId/folders", getAllFoldersByCompany);
-router.get("/:companyId/people", getAllCompanyPeople);
 
 module.exports = router;

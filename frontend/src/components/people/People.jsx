@@ -9,46 +9,26 @@ import './People.css';
 const People = () => {
   const [showInvitePopup, setShowInvitePopup] = useState(false);
   const [companies, setCompanies] = useState([]);
-  const [people, setPeople] = useState([]);
 
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const { data } = await axios.get('http://localhost:3000/api/companies', {
+        const { data } = await axios.get('http://localhost:3000/api/companies/all', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setCompanies(data.companies);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching companies:", error);
+        if (error.response && error.response.data.name === 'TokenExpiredError') {
+          localStorage.removeItem("token");
+          localStorage.removeItem("role");
+        }
       }
     };
 
     fetchCompanies();
   }, []);
-
-  useEffect(() => {
-    const fetchPeople = async () => {
-      try {
-        const companyIds = companies.map(company => company._id);
-        const peoplePromises = companyIds.map(id =>
-          axios.get(`http://localhost:3000/api/companies/${id}/people`, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-          })
-        );
-        const responses = await Promise.all(peoplePromises);
-        const allPeople = responses.flatMap(response => 
-          response.data.people.map(person => ({ ...person, companyId: response.data.companyId }))
-        );
-        setPeople(allPeople);
-      } catch (error) {
-        console.error("Error fetching people:", error);
-      }
-    };
-
-    if (companies.length > 0) {
-      fetchPeople();
-    }
-  }, [companies]);
 
   const handleOpenInvitePopup = () => {
     setShowInvitePopup(true);
@@ -86,29 +66,29 @@ const People = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {people.map((person) => (
-              <TableRow key={person._id}>
-                <TableCell>{person.email}</TableCell>
-                <TableCell>{person.username}</TableCell>
-                <TableCell>
-                  {companies.find(company => company._id === person.companyId)?.companyName || 'N/A'}
-                </TableCell>
-                <TableCell>
-                <Button 
-                    onClick={() => handleDelete(person._id)} 
-                    variant="contained" 
-                    sx={{
-                      backgroundColor: "#FA3F49", 
-                      color: "#fff", 
-                      textTransform: "none", 
-                      "&:hover": { backgroundColor: "#DB3740" }
-                    }}
-                  >
-                    Remove
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {companies.flatMap(company => 
+              company.people.map(person => (
+                <TableRow key={person._id}>
+                  <TableCell>{person.email}</TableCell>
+                  <TableCell>{person.username}</TableCell>
+                  <TableCell>{company.companyName}</TableCell>
+                  <TableCell>
+                    <Button 
+                      onClick={() => handleDelete(person._id)} 
+                      variant="contained" 
+                      sx={{
+                        backgroundColor: "#FA3F49", 
+                        color: "#fff", 
+                        textTransform: "none", 
+                        "&:hover": { backgroundColor: "#DB3740" }
+                      }}
+                    >
+                      Remove
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>

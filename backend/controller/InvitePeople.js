@@ -126,15 +126,5 @@ const sendEmail = async (email, signupLink, admin, company ) => {
 
 
 
-const decrypt = (hash) => {
-  const [iv, encrypted] = hash.split(':');
-  const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(iv, 'hex'));
-  const decrypted = Buffer.concat([decipher.update(Buffer.from(encrypted, 'hex')), decipher.final()]);
-
-  return decrypted.toString();
-};
-
-
-
 
 module.exports = { invitePeople, generateToken, sendEmail };
