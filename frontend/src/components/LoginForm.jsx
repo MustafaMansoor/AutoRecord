@@ -37,17 +37,19 @@ const LoginForm = () => {
           setError(error.response.data.message);
         }
       } else {
+        const loginData = { email, password };
+        if (token) {
+          loginData.token = token;
+        }
+
         const response = await axios.post(
           "http://localhost:3000/api/user/login",
-          {
-            email,
-            password,
-          }
+          loginData
         );
         console.log("Logged in successfully:", response.data);
 
-        const { token , role, adminName } = response.data;
-        localStorage.setItem("token", token);
+        const { token: authToken, role, adminName } = response.data;
+        localStorage.setItem("token", authToken);
         localStorage.setItem("role", role);
         localStorage.setItem("adminName", adminName);
         setIsAuthenticated(true); // Set isAuthenticated to true

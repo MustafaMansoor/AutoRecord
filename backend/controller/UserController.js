@@ -37,23 +37,28 @@ const decrypt = (encryptedText) => {
   return decrypted.toString();
 };
 
-
 // Register a new user (admin or people)
 const register = async (req, res) => {
   const { name, email, password, token } = req.body;
-  
-  const decryptedToken = decrypt(token);
-  try {
-    const tokenDoc = await Token.findOne({ token: decryptedToken });
-    if (!tokenDoc) {
-      return res.status(400).json({ message: "Invalid or expired token" });
-    }
 
-    // Check if the email matches the token's email
-    if (email !== tokenDoc.email) {
-      return res
-        .status(400)
-        .json({ message: "Email does not match the token" });
+  try {
+    let role = "admin"; // Default role if no token is provided
+    let companyId = null;
+
+    if (token) {
+      const decryptedToken = decrypt(token);
+      const tokenDoc = await Token.findOne({ token: decryptedToken });
+      if (!tokenDoc) {
+        return res.status(400).json({ message: "Invalid or expired token" });
+      }
+
+      // Check if the email matches the token's email
+      if (email !== tokenDoc.email) {
+        return res.status(400).json({ message: "Email does not match the token" });
+      }
+
+      role = tokenDoc.role;
+      companyId = tokenDoc.companyId;
     }
 
     // Check if the user already exists
@@ -65,27 +70,29 @@ const register = async (req, res) => {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user with the role from the token
+    // Create a new user with the determined role
     const newUser = new User({
       username: name,
       email,
       password: hashedPassword,
-      role: tokenDoc.role,
+      role: role,
     });
 
     await newUser.save();
-    
-    // If the role is 'people', add them to the specified company
-    if (tokenDoc.role === "people" && tokenDoc.companyId) {
-      const company = await Company.findById(tokenDoc.companyId);
+
+    // If the role is 'people' and a companyId is provided, add them to the specified company
+    if (role === "people" && companyId) {
+      const company = await Company.findById(companyId);
       if (company) {
         company.people.push(newUser._id);
         await company.save();
       }
     }
 
-    await Token.deleteOne({ token: decryptedToken }); // Remove the token after successful registration
-    
+    if (token) {
+      await Token.deleteOne({ token: decryptedToken }); // Remove the token after successful registration
+    }
+
     // Generate a JWT token
     const jwtToken = jwt.sign(
       { userId: newUser._id, role: newUser.role },
@@ -100,9 +107,9 @@ const register = async (req, res) => {
   }
 };
 
-// Login a user
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, token } = req.body;
+  const headerToken = token;
 
   try {
     // Find the user by email
@@ -117,20 +124,37 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
+    // If a token is provided in the header, handle the "people" role logic
+    if (headerToken) {
+      const decryptedToken = decrypt(headerToken);
+      const tokenDoc = await Token.findOne({ token: decryptedToken });
+      if (!tokenDoc) {
+        return res.status(400).json({ message: "Invalid or expired token" });
+      }
+
+      // Check if the user role is "people" and add them to the company
+      if (user.role === "people" && tokenDoc.companyId) {
+        const company = await Company.findById(tokenDoc.companyId);
+        if (company && !company.people.includes(user._id)) {
+          company.people.push(user._id);
+          await company.save();
+        }
+      }
+    }
+
     // Generate a JWT token
-    const token = jwt.sign(
+    const jwtToken = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ token, role: user.role, adminName: user.username });
+    res.status(200).json({ token: jwtToken, role: user.role, adminName: user.username });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
 
   const validateToken= (req, res) => {
   const { token } = req.body;
