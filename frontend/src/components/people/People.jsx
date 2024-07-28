@@ -41,6 +41,13 @@ const People = () => {
   };
 
   const handleDelete = async (person_Id, company_Id) => {
+    const role = localStorage.getItem('role');
+    
+    if (role !== 'admin') {
+      toast.error("Only Admin can remove people.");
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
       
