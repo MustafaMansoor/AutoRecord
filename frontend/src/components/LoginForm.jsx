@@ -5,6 +5,7 @@ import axios from "axios";
 import "./login.css";
 import { AuthContext } from "./Context/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -31,11 +32,11 @@ const LoginForm = () => {
             "http://localhost:3000/api/user/register",
             { name, email, password, token }
           );
-          console.log("Registered successfully:", response.data);
-          alert("User registered successfully");
+          toast.success("User registered successfully");
           handleToggle();
         } catch (error) {
           setError(error.response.data.message);
+          toast.error(error.response.data.message);
         }
       } else {
         const loginData = { email, password };
@@ -47,16 +48,16 @@ const LoginForm = () => {
           "http://localhost:3000/api/user/login",
           loginData
         );
-        console.log("Logged in successfully:", response.data);
 
         const { token: authToken, role, adminName } = response.data;
         localStorage.setItem("token", authToken);
         localStorage.setItem("role", role);
         localStorage.setItem("adminName", adminName);
-        setIsAuthenticated(true); // Set isAuthenticated to true
-
+        setIsAuthenticated(true);
+        toast.success("Logged in successfully");
         navigate("/");
       }
+
       // Reset form fields
       setEmail("");
       setPassword("");
@@ -65,10 +66,10 @@ const LoginForm = () => {
       setError("");
     } catch (error) {
       setError(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
-  // Fetch token from URL when component mounts
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = queryParams.get("token");
@@ -83,7 +84,6 @@ const LoginForm = () => {
         "http://localhost:3000/api/user/reset-password",
         { email }
       );
-      console.log("Reset password email sent:", response.data);
       toast.success("Reset password email sent");
     } catch (error) {
       toast.error(error.response.data.message);
