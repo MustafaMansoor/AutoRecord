@@ -27,13 +27,13 @@ app.use("/api/companies", companyRoutes);
 
 
 // Use purchase routes
-app.use("/api/companies/:companyId/purchases", purchaseRoutes);
+app.use("/api/companies/", purchaseRoutes);
 
 // Use sale routes
-app.use("/api/companies/:companyId/sales", saleRoutes);
+app.use("/api/companies/", saleRoutes);
 
 // Use supplier routes
-app.use("/api/companies/:companyId/suppliers", supplierRoutes);
+app.use("/api/companies/", supplierRoutes);
 
 app.use("/api/upload", ImageRoute);
 

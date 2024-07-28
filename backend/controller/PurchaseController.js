@@ -158,4 +158,56 @@ const deletePurchaseForCompany = async (req, res) => {
     }
   };
 
-    module.exports = { addPurchaseToCompany, getAllPurchasesByCompany, editPurchaseForCompany, deletePurchaseForCompany };
+  const getAllPurchaseCategories = async (req, res) => {
+    try {
+      const categories = await Purchase.distinct("category");
+      res.status(200).json(categories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
+
+const updatePurchaseCategoryForCompany = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const { companyId, purchaseId } = req.params;
+    const { category } = req.body;
+
+    if (!category) {
+      throw new Error("Category is required");
+    }
+
+    // Update the category of the purchase
+    const updatedPurchase = await Purchase.findByIdAndUpdate(
+      purchaseId,
+      { category },
+      { new: true, session }
+    );
+
+    if (!updatedPurchase) {
+      throw new Error("Purchase not found");
+    }
+
+    // Ensure the purchase belongs to the company
+    const company = await Company.findOne({ _id: companyId, purchases: purchaseId }).session(session);
+    if (!company) {
+      throw new Error("Company not found or purchase does not belong to the company");
+    }
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({ updatedPurchase });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Error updating category for purchase:", error);
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
+  }
+};
+
+
+    module.exports = { addPurchaseToCompany, getAllPurchasesByCompany, editPurchaseForCompany, deletePurchaseForCompany, getAllPurchaseCategories, updatePurchaseCategoryForCompany };

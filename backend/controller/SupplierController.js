@@ -148,9 +148,62 @@ const addSupplierToCompany = async (req, res) => {
     }
   };
     
+  const getAllSupplierCategories = async (req, res) => {
+    try {
+      const categories = await Supplier.distinct("category");
+      res.status(200).json(categories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
+  const updateSupplierCategoryForCompany = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    try {
+      const { companyId, supplierId } = req.params;
+      const { category } = req.body;
+  
+      if (!category) {
+        throw new Error("Category is required");
+      }
+  
+      // Update the category of the supplier
+      const updatedSupplier = await Supplier.findByIdAndUpdate(
+        supplierId,
+        { category },
+        { new: true, session }
+      );
+  
+      if (!updatedSupplier) {
+        throw new Error("Supplier not found");
+      }
+  
+      // Ensure the supplier belongs to the company
+      const company = await Company.findOne({ _id: companyId, suppliers: supplierId }).session(session);
+      if (!company) {
+        throw new Error("Company not found or supplier does not belong to the company");
+      }
+  
+      await session.commitTransaction();
+      session.endSession();
+  
+      res.status(200).json({ updatedSupplier });
+    } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
+      console.error("Error updating category for supplier:", error);
+      res.status(500).json({ error: "Internal Server Error", details: error.message });
+    }
+  };
+  
+
 module.exports = {
     addSupplierToCompany,
     getAllSuppliersByCompany,
     editSupplierForCompany,
-    deleteSupplierForCompany
+    deleteSupplierForCompany,
+    getAllSupplierCategories,
+    updateSupplierCategoryForCompany
 };

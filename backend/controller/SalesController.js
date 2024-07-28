@@ -156,5 +156,57 @@ const deleteSaleForCompany = async (req, res) => {
   };
   
   
-  module.exports = { addSaleToCompany, editSaleForCompany, getAllSalesByCompany, deleteSaleForCompany };
+  const getAllSalesCategories = async (req, res) => {
+    try {
+      const categories = await Sale.distinct("category");
+      res.status(200).json(categories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
+
+  const updateSaleCategoryForCompany = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    try {
+      const { companyId, saleId } = req.params;
+      const { category } = req.body;
+  
+      if (!category) {
+        throw new Error("Category is required");
+      }
+  
+      // Update the category of the sale
+      const updatedSale = await Sale.findByIdAndUpdate(
+        saleId,
+        { category },
+        { new: true, session }
+      );
+  
+      if (!updatedSale) {
+        throw new Error("Sale not found");
+      }
+  
+      // Ensure the sale belongs to the company
+      const company = await Company.findOne({ _id: companyId, sales: saleId }).session(session);
+      if (!company) {
+        throw new Error("Company not found or sale does not belong to the company");
+      }
+  
+      await session.commitTransaction();
+      session.endSession();
+  
+      res.status(200).json({ updatedSale });
+    } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
+      console.error("Error updating category for sale:", error);
+      res.status(500).json({ error: "Internal Server Error", details: error.message });
+    }
+  };
+  
+  
+  module.exports = { addSaleToCompany, editSaleForCompany, getAllSalesByCompany, deleteSaleForCompany,getAllSalesCategories,updateSaleCategoryForCompany };
   

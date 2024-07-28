@@ -1,4 +1,3 @@
-
 const {addPurchaseToCompany} = require('../controller/PurchaseController');
 const {addSaleToCompany} = require('../controller/SalesController');
 const {addSupplierToCompany} = require('../controller/SupplierController');
