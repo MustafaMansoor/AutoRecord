@@ -205,7 +205,18 @@ const updateCompany = async (req, res) => {
       return res.status(404).json({ error: "Company not found" });
     }
 
-    Object.assign(company, req.body);
+    const { companyName, country, currency } = req.body;
+
+    if (companyName !== undefined) {
+      company.companyName = companyName;
+    }
+    if (country !== undefined) {
+      company.country = country;
+    }
+    if (currency !== undefined) {
+      company.currency = currency;
+    }
+
     await company.save();
 
     res.status(200).json({ company });
