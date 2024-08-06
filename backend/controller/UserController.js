@@ -328,6 +328,32 @@ const updateProfile = async (req, res) => {
     // Save the updated user
     await user.save();
 
+    // Send an email to the user
+    try {
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: user.email,
+        subject: "AutoRecord - Profile Updated",
+        html: `
+          <div style="text-align: center; font-family: Arial, sans-serif; color: #333;">
+            <p style="font-size: 16px;">Your profile has been updated successfully.</p>
+            <br />
+            <p style="font-size: 16px;">If you did not make this change, please contact support immediately.</p>
+          </div>
+        `,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending email:", error);
+        } else {
+          console.log("Email sent:", info.response);
+        }
+      });
+    } catch (emailError) {
+      console.error("Error in email sending block:", emailError);
+    }
+
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     console.error("Error updating profile:", error);
