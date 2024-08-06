@@ -6,13 +6,13 @@ import HollowTickIcon from "@mui/icons-material/CheckCircleOutline";
 import HollowExclamationTriangleIcon from "@mui/icons-material/WarningAmberOutlined";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 const vatOptions = [
   { label: "Sales Standard Rated - 20%", value: "20" },
@@ -113,7 +113,7 @@ function EditImageDetails({ data }) {
 
   return (
     <div className="edit-page-main-container">
-      <div className="edit-page-form-container">
+      <div className="edit-page-form-container" style={{ maxHeight: 400 }}>
         <form className="edit-form">
           <div className="form-row">
             <div className="form-group">
@@ -238,7 +238,7 @@ function EditImageDetails({ data }) {
           </div>
         </form>
       </div>
-      <div className="edit-page-footer buttons">
+      <div className="edit-page-footer buttons" style={{ marginTop: 270 }}>
         <CustomButton
           icon={<DeleteIcon />}
           text="Delete"
@@ -271,17 +271,17 @@ function EditImageDetails({ data }) {
             value={rejectionReason}
             onChange={(e) => setRejectionReason(e.target.value)}
             sx={{
-              '& .MuiInput-underline:before': {
-                borderBottomColor: 'black',
+              "& .MuiInput-underline:before": {
+                borderBottomColor: "black",
               },
-              '& .MuiInput-underline:hover:before': {
-                borderBottomColor: 'black',
+              "& .MuiInput-underline:hover:before": {
+                borderBottomColor: "black",
               },
-              '& .MuiInput-underline:after': {
-                borderBottomColor: 'black',
+              "& .MuiInput-underline:after": {
+                borderBottomColor: "black",
               },
-              '& .MuiFormLabel-root.Mui-focused': {
-                color: 'black',
+              "& .MuiFormLabel-root.Mui-focused": {
+                color: "black",
               },
             }}
           />
