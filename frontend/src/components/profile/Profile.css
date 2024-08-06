@@ -1,0 +1,19 @@
+.profile-container {
+  padding: 32px;
+  max-width: 600px;
+  margin: auto;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.profile-field {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.profile-container h5 {
+  margin-bottom: 24px;
+  text-align: center;
+}

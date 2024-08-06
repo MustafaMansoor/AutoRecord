@@ -16,7 +16,6 @@ const Sidebar = () => {
   const menuItems = [
     { name: "Home", icon: <HomeIcon />, path: "/" },
     { name: "People", icon: <PeopleIcon />, path: "/people" },
-    { name: "Settings", icon: <SettingsIcon />, path: "/settings" },
     { name: "Profile", icon: <PersonIcon />, path: "/profile" },
   ];
   const handleLogout = () => {

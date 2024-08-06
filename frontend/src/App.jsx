@@ -4,6 +4,7 @@ import Sidebar from "./components/dashboard/Sidebar";
 import Topbar from "./components/dashboard/Topbar";
 import Dashboard from "./components/dashboard/Dashboard";
 import People from "./components/people/People";
+import Profile from "./components/profile/Profile";
 import "./app.css";
 import FolderComponent from "./components/FolderComponents/FolderComponent";
 import Folders from "./components/folders/Folders";
@@ -57,8 +58,7 @@ function InnerApp() {
               element={<SupplierEditAndView />}
             />
             <Route path="/people" element={<People />} />
-            <Route path="/settings" element={<div>Settings Page</div>} />
-            <Route path="/profile" element={<div>Profile Page</div>} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
       </div>

@@ -289,10 +289,58 @@ const updatePassword = async (req, res) => {
   }
 };
 
+// Route to get the logged in user
+const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-password"); // Exclude the password
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// Route to update the profile
+const updateProfile = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const userId = req.user.userId;
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update username if provided
+    if (username) {
+      user.username = username;
+    }
+
+    // Update password if provided
+    if (password) {
+      user.password = await bcrypt.hash(password, 10);
+    }
+
+    // Save the updated user
+    await user.save();
+
+    res.status(200).json({ message: "Profile updated successfully" });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   register,
   login,
   validateToken,
   resetPassword,
   updatePassword,
+  getProfile,
+  updateProfile,
 };
