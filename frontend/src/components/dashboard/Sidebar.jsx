@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./Sidebar.css";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
-import SettingsIcon from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useContext } from "react";
@@ -25,7 +24,9 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="logo">
-        <img src="logo.svg" alt="Logo" />
+      <Link to="/">
+        <img src="/logo.svg" alt="Logo" />
+      </Link>
         <ul>
           {menuItems.map((item) => (
             <li
