@@ -169,13 +169,23 @@ function EditImageDetails({ data }) {
           </div>
 
           <div className="form-row">
-
             <div className="form-group">
               <label>Currency</label>
               <input
                 type="text"
                 name="currency"
                 value={formData.currency}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Category</label>
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
                 onChange={handleInputChange}
               />
             </div>
@@ -252,29 +262,29 @@ function EditImageDetails({ data }) {
             To reject this purchase, please provide a reason for the rejection.
           </DialogContentText>
           <TextField
-      autoFocus
-      margin="dense"
-      label="Rejection Reason"
-      type="text"
-      fullWidth
-      variant="standard"
-      value={rejectionReason}
-      onChange={(e) => setRejectionReason(e.target.value)}
-      sx={{
-        '& .MuiInput-underline:before': {
-          borderBottomColor: 'black',
-        },
-        '& .MuiInput-underline:hover:before': {
-          borderBottomColor: 'black',
-        },
-        '& .MuiInput-underline:after': {
-          borderBottomColor: 'black',
-        },
-        '& .MuiFormLabel-root.Mui-focused': {
-          color: 'black',
-        },
-      }}
-    />
+            autoFocus
+            margin="dense"
+            label="Rejection Reason"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={rejectionReason}
+            onChange={(e) => setRejectionReason(e.target.value)}
+            sx={{
+              '& .MuiInput-underline:before': {
+                borderBottomColor: 'black',
+              },
+              '& .MuiInput-underline:hover:before': {
+                borderBottomColor: 'black',
+              },
+              '& .MuiInput-underline:after': {
+                borderBottomColor: 'black',
+              },
+              '& .MuiFormLabel-root.Mui-focused': {
+                color: 'black',
+              },
+            }}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose} style={{ color: "#2f2f2f" }}>

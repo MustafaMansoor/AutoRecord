@@ -67,7 +67,11 @@ const CategoryDropdown = ({ type, selectedCategory, onCategoryChange, isSmall, c
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
       renderInput={(params) => (
-        <TextField {...params} label="Category" size={isSmall ? 'small' : 'medium'} />
+        <TextField
+          {...params}
+          label={selectedCategory || ''}
+          size={isSmall ? 'small' : 'medium'}
+        />
       )}
       freeSolo
     />

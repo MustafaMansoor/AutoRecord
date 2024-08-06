@@ -28,7 +28,6 @@ async function describeImage(imageUrl, prompt) {
     };
 
     const result = await model.generateContent([prompt, imageData]);
-    console.log("result is ",result);
     return result.response.text();
   } catch (error) {
     console.error("Error describing image:", error);
@@ -123,9 +122,7 @@ const getData = async (req, res) => {
   try {
     const prompt = getPromptForCategory(category);
     const description = await describeImage(imageUrl, prompt);
-    console.log("description is ",description);
     const parsedData = parseDescription(description);
-    console.log("after parsing the data ",parsedData);
     const status = "pending";
     const date = parsedData['Date'] ? new Date(parsedData['Date']) : null;
     const vat = parsedData['VAT Amount'] ? parseFloat(parsedData['VAT Amount'].replace(/,/g, '')) : null;

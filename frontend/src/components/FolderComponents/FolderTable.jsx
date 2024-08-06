@@ -92,9 +92,9 @@ const FolderTable = ({ data, tabValue, type }) => {
               <TableCell>{item.supplierName || ''}</TableCell>
               <TableCell>{item.supplierAccount || ''}</TableCell>
               <TableCell>
-                <CategoryDropdown
+              <CategoryDropdown
                   type={type}
-                  selectedCategory={selectedCategories[item._id]}
+                  selectedCategory={item.category || ''}
                   onCategoryChange={(category) => handleCategoryChange(item._id, category)}
                   companyId={companyId}
                   itemId={item._id}
@@ -112,9 +112,9 @@ const FolderTable = ({ data, tabValue, type }) => {
               <TableCell>{item.customerName || ''}</TableCell>
               <TableCell>{item.customerAccount || ''}</TableCell>
               <TableCell>
-                <CategoryDropdown
+              <CategoryDropdown
                   type={type}
-                  selectedCategory={selectedCategories[item._id]}
+                  selectedCategory={item.category || ''}
                   onCategoryChange={(category) => handleCategoryChange(item._id, category)}
                   companyId={companyId}
                   itemId={item._id}

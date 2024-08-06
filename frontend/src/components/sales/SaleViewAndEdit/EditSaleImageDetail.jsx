@@ -178,6 +178,17 @@ function EditSaleImageDetail({ data }) {
               />
             </div>
           </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Category</label>
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
           <hr className="divider" />
           <div className="form-row">
             <div className="form-group">
